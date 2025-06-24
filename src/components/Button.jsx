@@ -14,23 +14,23 @@ export default function Button({ onClickProp = () => { }, buttonType = BUTTON_TY
   if (buttonType == BUTTON_TYPE.PRIMARY) {
     return (
       <>
-        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-light bg-linear-to-r from-primary-800 to-primary-700 hover:bg-primary-600 font-medium rounded-full text-base px-10 py-2.5 text-base-white ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-light bg-linear-to-r from-primary-800 to-primary-700 hover:bg-primary-600 font-medium rounded-full px-10 py-2.5 text-base-white ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
           {isLoading && <IconLoader2 className="animate-spin text-sm" />}
           {children}
         </button>
       </>
     )
   }
-  // else if (buttonType == BUTTON_TYPE.SECONDARY) {
-  //   return (
-  //     <>
-  //       <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-primary-500 dark:text-primary-50 bg-primary-50 hover:bg-primary-100 hover:text-primary-600 font-medium rounded-lg text-sm px-6 py-2 dark:bg-primary-700 dark:hover:bg-primary-600 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-  //         {isLoading && <IconLoader2 className="animate-spin text-sm" />}
-  //         {children}
-  //       </button>
-  //     </>
-  //   )
-  // }
+  else if (buttonType == BUTTON_TYPE.SECONDARY) {
+    return (
+      <>
+        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-primary-900 bg-primary-200 hover:bg-primary-100 hover:text-primary-600 font-medium rounded-full px-10 py-2.5 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+          {isLoading && <IconLoader2 className="animate-spin text-sm" />}
+          {children}
+        </button>
+      </>
+    )
+  }
   // else if (buttonType == BUTTON_TYPE.DANGER) {
   //   return (
   //     <>

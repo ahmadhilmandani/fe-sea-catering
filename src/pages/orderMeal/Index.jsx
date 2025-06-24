@@ -1,4 +1,6 @@
 import { useState } from "react"
+import HeroImg from "../../assets/img/hero-img-reduce.jpg"
+import OrderMealCard from "../../components/orderMeal/orderMeal."
 
 
 const FILTER_OPT = {
@@ -48,7 +50,7 @@ export default function OrderMealIndex() {
           </ul>
         </div>
         <div className="flex gap-12">
-
+          <OrderMealCard />
         </div>
       </main>
     </div>
