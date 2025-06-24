@@ -1,51 +1,46 @@
-import HeroImg from "../../assets/img/hero-img-reduce.jpg"
+// import HeroImg from "../../assets/img/hero-img-reduce.jpg"
 import Button from "../Button"
 
 
-export default function OrderMealCard({onClickButton2ndary}) {
+export default function OrderMealCard({ cardTitle, price, description, dietTypeTime, nutrition, onClickButton2ndary }) {
   return (
-    <div class="max-w-md w-full bg-white border border-gray-200 rounded-xl">
-      <div className="w-full aspect-[16_/_9] bg-red-100 bg-cover bg-center bg-no-repeat overflow-hidden rounded-t-xl" style={{
+    <div class="max-w-md w-full aspect-square bg-white border border-gray-200 rounded-xl relative">
+      {/* <div className="w-full aspect-[16_/_9] bg-red-100 bg-cover bg-center bg-no-repeat overflow-hidden rounded-t-xl" style={{
         backgroundImage: `url(${HeroImg})`
       }}>
-      </div>
+      </div> 
+      */}
       <div class="p-5">
-        <h3 class="text-2xl font-semibold text-balance">
-          Tahu Tek
+        <h3 class="text-2xl font-semibold text-balance line-clamp-2">
+          {cardTitle}
         </h3>
         <div className="mb-3 text-primary-700 font-semibold mt-[-12px]">
-          Rp. 10.0000, 00
+          Rp. {price}
         </div>
 
-        <p class="border-b border-gray-300 py-3 mb-5 font-normal text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+        <p class="border-b border-gray-300 py-3 mb-5 font-normal text-gray-700 line-clamp-2">{description}</p>
         <div className="flex mb-5 gap-2 flex-wrap">
+          {dietTypeTime?.map((val) => {
+            return (
+              <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
+                <div className="font-semibold text-primary-800 text-xs">
+                  {val}
+                </div>
+              </div>
+            )
+          })}
           <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
             <div className="font-semibold text-primary-800 text-xs">
-              Sarapan
+              protein: {nutrition?.protein?.val} {nutrition?.protein?.value}
             </div>
           </div>
           <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
             <div className="font-semibold text-primary-800 text-xs">
-              Kalori : 200 kkal
-            </div>
-          </div>
-          <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-            <div className="font-semibold text-primary-800 text-xs">
-              Protein : 10 g
-            </div>
-          </div>
-          <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-            <div className="font-semibold text-primary-800 text-xs">
-              Kabrohidrat : 10 g
-            </div>
-          </div>
-          <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-            <div className="font-semibold text-primary-800 text-xs">
-              Lemak : 10 g
+              protein: {nutrition?.calorie?.val} {nutrition?.calorie?.unit}
             </div>
           </div>
         </div>
-        <div className="flex gap-5 flex-wrap">
+        <div className="flex gap-5 flex-wrap absolute bottom-5 left-5 right-5">
           <div className="min-w-[200px] flex-1">
             <Button isExtend={true} buttonType="secondary" onClickProp={onClickButton2ndary}>
               Detail
