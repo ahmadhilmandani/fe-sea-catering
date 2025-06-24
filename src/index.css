@@ -13,7 +13,7 @@
   --color-primary-900: #4f6d49;
   --color-primary-950: #405e3a;
 
-  --color-base-white: #FCFDFA
+  --color-base-white: #fcfdfa;
 }
 
 @layer base {
@@ -101,5 +101,29 @@
     font-size: 14px;
     line-height: 160%;
     font-family: "Schibsted Grotesk", sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold relative z-10 mb-4;
+  }
+
+  h1 {
+    @apply text-5xl leading-[160%] tracking-[0.15px];
+  }
+
+  h2 {
+    @apply text-4xl leading-[160%] tracking-[0.15px];
+  }
+
+  h3 {
+    @apply text-2xl leading-[160%] tracking-[0.15px];
+  }
+
+  p {
+    @apply mb-2 leading-[160%] tracking-[0.15px];
   }
 }
