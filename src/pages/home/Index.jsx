@@ -9,7 +9,7 @@ export default function HomeIndex() {
   return (
     <div className="w-full min-h-screen bg-base-white relative">
       <Navbar />
-      <main className="pt-40 px-12">
+      <main className="px-12">
         <section className="pb-24">
           <div className="flex gap-20 justify-between mb-20">
             <div className="min-w-[320px] flex-1">
