@@ -31,12 +31,12 @@ export default function OrderMealCard({ cardTitle, price, description, dietTypeT
           })}
           <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
             <div className="font-semibold text-primary-800 text-xs">
-              protein: {nutrition?.protein?.val} {nutrition?.protein?.value}
+              protein: {nutrition?.protein?.value} {nutrition?.protein?.unit}
             </div>
           </div>
           <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
             <div className="font-semibold text-primary-800 text-xs">
-              protein: {nutrition?.calorie?.val} {nutrition?.calorie?.unit}
+              kalori:  {nutrition?.calorie?.value} {nutrition?.calorie?.unit}
             </div>
           </div>
         </div>
