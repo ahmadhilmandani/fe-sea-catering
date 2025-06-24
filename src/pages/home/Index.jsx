@@ -257,9 +257,9 @@ export default function HomeIndex() {
             <span class="text-sm text-white">© 2025 <a href="https://flowbite.com/" class="hover:underline">SEA CATERING</a>. All Rights Reserved.
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0 gap-3">
-                  <IconBrandGoogle size={16} className="text-white" />
-                  <IconX size={16} className="text-white" />
-                  <IconBrandWhatsapp size={16} className="text-white" />
+              <IconBrandGoogle size={16} className="text-white" />
+              <IconX size={16} className="text-white" />
+              <IconBrandWhatsapp size={16} className="text-white" />
             </div>
           </div>
         </div>

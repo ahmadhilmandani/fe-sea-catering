@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import LogoSEA from "../assets/logo/logo-sea-catering.png"
 import Button from "./Button"
 
@@ -21,15 +22,24 @@ export default function Navbar() {
         <a>
           How to?
         </a>
-        <a>
-          Our Contact
-        </a>
       </div>
 
-      <div>
+      <div className="flex gap-8 items-center">
+        <Link>
+          Order Meal
+        </Link>
+        <Link>
+          Subscribe
+        </Link>
+        <Link>
+          Contact
+        </Link>
         <Button buttonType="primary">
-          Login
+          Daftar
         </Button>
+        <Link className="text-primary-900 border-b border-primary-900">
+          Login
+        </Link>
       </div>
 
     </nav>
