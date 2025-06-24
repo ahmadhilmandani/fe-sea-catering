@@ -2,7 +2,7 @@ import HeroImg from "../../assets/img/hero-img-reduce.jpg"
 import Button from "../Button"
 
 
-export default function OrderMealCard() {
+export default function OrderMealCard({onClickButton2ndary}) {
   return (
     <div class="max-w-md w-full bg-white border border-gray-200 rounded-xl">
       <div className="w-full aspect-[16_/_9] bg-red-100 bg-cover bg-center bg-no-repeat overflow-hidden rounded-t-xl" style={{
@@ -47,7 +47,7 @@ export default function OrderMealCard() {
         </div>
         <div className="flex gap-5 flex-wrap">
           <div className="min-w-[200px] flex-1">
-            <Button isExtend={true} buttonType="secondary">
+            <Button isExtend={true} buttonType="secondary" onClickProp={onClickButton2ndary}>
               Detail
               <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
