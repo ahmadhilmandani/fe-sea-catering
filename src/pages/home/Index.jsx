@@ -1,11 +1,17 @@
 import { Link } from "react-router";
 import Navbar from "../../components/Navbar";
-import { IconArrowDown, IconBrandGoogle, IconBrandWhatsapp, IconSalad, IconX } from "@tabler/icons-react";
+import { IconArrowDown, IconBrandGoogle, IconBrandWhatsapp, IconChevronDown, IconChevronUp, IconSalad, IconStarFilled, IconX } from "@tabler/icons-react";
 import HeroImg from "../../assets/img/hero-img-reduce.jpg"
 import Button from "../../components/Button";
 import IconWhite from "../../assets/logo/logo-sea-catering-white.png"
+import TestimoniCard from "./TestimoniCard";
+import Input from "../../components/Input";
+import TestimoniFormCard from "./TestimoniFormCard";
+import { useState } from "react";
 
 export default function HomeIndex() {
+  const [isTestiFormOpen, setIsTestiFormOpen] = useState(false)
+
   return (
     <div className="w-full min-h-screen bg-base-white relative">
       <Navbar />
@@ -115,45 +121,45 @@ export default function HomeIndex() {
                 How to Use Our Service?
               </h2>
             </div>
-            <ol class="items-center sm:flex">
-              <li class="relative mb-6 sm:mb-0">
-                <div class="flex items-center">
-                  <div class="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
+            <ol className="items-center sm:flex">
+              <li className="relative mb-6 sm:mb-0">
+                <div className="flex items-center">
+                  <div className="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
                     01.
                   </div>
-                  <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                  <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div class="mt-3 sm:pe-8 ">
-                  <h3 class="font-semibold text-gray-900">Daftar & Berlangganan</h3>
-                  <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+                <div className="mt-3 sm:pe-8 ">
+                  <h3 className="font-semibold text-gray-900">Daftar & Berlangganan</h3>
+                  <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                     Spill makanan seperti apa yang anda inginkan, alergi yang anda miliki, serta kapan dan dimana makanan mu ingin diantarkan!
                   </p>
                 </div>
               </li>
-              <li class="relative mb-6 sm:mb-0">
-                <div class="flex items-center">
-                  <div class="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
+              <li className="relative mb-6 sm:mb-0">
+                <div className="flex items-center">
+                  <div className="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
                     02.
                   </div>
-                  <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                  <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div class="mt-3 sm:pe-8 ">
-                  <h3 class="font-semibold text-gray-900">Pay The Bill</h3>
-                  <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+                <div className="mt-3 sm:pe-8 ">
+                  <h3 className="font-semibold text-gray-900">Pay The Bill</h3>
+                  <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                     Lakukan pembayaran dengan mudah dan aman melalui berbagai metode yang tersedia.
                   </p>
                 </div>
               </li>
-              <li class="relative mb-6 sm:mb-0">
-                <div class="flex items-center">
-                  <div class="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
+              <li className="relative mb-6 sm:mb-0">
+                <div className="flex items-center">
+                  <div className="z-10 flex items-center justify-center size-12 text-white bg-primary-600 rounded-full ring-0 ring-base-white sm:ring-8 shrink-0">
                     03.
                   </div>
-                  <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                  <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                 </div>
-                <div class="mt-3 sm:pe-8 ">
-                  <h3 class="font-semibold text-gray-900">Sit Back, Your Healthy Meal On Delivery!</h3>
-                  <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+                <div className="mt-3 sm:pe-8 ">
+                  <h3 className="font-semibold text-gray-900">Sit Back, Your Healthy Meal On Delivery!</h3>
+                  <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                     Duduk santai dan tunggu, makanan sehat Anda segera dikirim langsung ke depan pintu.
                   </p>
                 </div>
@@ -161,8 +167,39 @@ export default function HomeIndex() {
             </ol>
           </div>
         </section>
+        <section className="min-h-screen py-24">
+          <h2 className="font-semibold mb-8 text-center">
+            Testimonial
+          </h2>
+          <div className="max-w-6xl w-full overflow-x-auto flex pl-10 gap-12 mb-12 mx-auto">
+            <TestimoniCard />
+            <TestimoniCard />
+            <TestimoniCard />
+          </div>
+          <p className="mb-2 text-center">Kalau kamu pernah menggunakan layanan kami, maka apresiasi yang besar bila kamu juga memberikan testimoni ! </p>
+          {isTestiFormOpen ?
+            <>
+              <div className="mx-auto max-w-3xl w-full mb-5">
+                <TestimoniFormCard />
+              </div>
+              <div className="w-72 mx-auto">
+                <Button buttonType="secondary" isExtend={true} onClickProp={() => { setIsTestiFormOpen(false) }}>
+                  Tutup Form
+                  <IconChevronUp className="text-primary-900" />
+                </Button>
+              </div>
+            </>
+            :
+            <div className="w-72 mx-auto">
+              <Button buttonType="primary" isExtend={true} onClickProp={() => { setIsTestiFormOpen(true) }}>
+                Beri Testimonimu
+                <IconChevronDown color="white" />
+              </Button>
+            </div>
+          }
+        </section>
         <section className="py-24 min-h-screen">
-          <div class="flex gap-20 justify-center items-center">
+          <div className="flex gap-20 justify-center items-center">
             <div className="min-w-[320px] flex-1 max-w-[40%]">
               <h2 className="text-balance">Yuk, Izinkan Kami Ngebantu Kamu Buat Hidup Sehat!</h2>
               <p className="text-gray-600 mb-12">
@@ -206,57 +243,57 @@ export default function HomeIndex() {
           </div>
         </section>
       </main>
-      <footer class="bg-primary-800">
-        <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-          <div class="md:flex md:justify-between">
-            <div class="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" class="flex items-center">
-                <img src={IconWhite} class="h-12 me-3" alt="FlowBite Logo" />
+      <footer className="bg-primary-800">
+        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+          <div className="md:flex md:justify-between">
+            <div className="mb-6 md:mb-0">
+              <a href="https://flowbite.com/" className="flex items-center">
+                <img src={IconWhite} className="h-12 me-3" alt="FlowBite Logo" />
                 <div>
                   <div className="font-bold text-white">SEA</div>
                   <div className="font-bold text-white">CATERING</div>
                 </div>
               </a>
             </div>
-            <div class="grid grid-cols-2 gap-8 sm:gap-6">
+            <div className="grid grid-cols-2 gap-8 sm:gap-6">
               <div>
-                <h2 class="mb-6 text-sm font-semibold uppercase text-white">MENU</h2>
-                <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                  <li class="mb-4">
-                    <a href="https://flowbite.com/" class="hover:underline text-white">Home</a>
+                <h2 className="mb-6 text-sm font-semibold uppercase text-white">MENU</h2>
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <li className="mb-4">
+                    <a href="https://flowbite.com/" className="hover:underline text-white">Home</a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" class="hover:underline text-white">Lovely Services</a>
+                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Lovely Services</a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" class="hover:underline text-white">How to?</a>
+                    <a href="https://tailwindcss.com/" className="hover:underline text-white">How to?</a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" class="hover:underline text-white">Our Contact</a>
+                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Our Contact</a>
                   </li>
                 </ul>
               </div>
               <div>
-                <h2 class="mb-6 text-sm font-semibold uppercase text-white">SERVICES</h2>
-                <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                  <li class="mb-4">
-                    <a href="https://flowbite.com/" class="hover:underline text-white">Meal Customization</a>
+                <h2 className="mb-6 text-sm font-semibold uppercase text-white">SERVICES</h2>
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <li className="mb-4">
+                    <a href="https://flowbite.com/" className="hover:underline text-white">Meal Customization</a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" class="hover:underline text-white">Delivery to Major Cities</a>
+                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Delivery to Major Cities</a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" class="hover:underline text-white">Detailed Nutritional Information</a>
+                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Detailed Nutritional Information</a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <hr class="my-6 border-gray-200 lg:my-8" />
-          <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-white">© 2025 <a href="https://flowbite.com/" class="hover:underline">SEA CATERING</a>. All Rights Reserved.
+          <hr className="my-6 border-gray-200 lg:my-8" />
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <span className="text-sm text-white">© 2025 <a href="https://flowbite.com/" className="hover:underline">SEA CATERING</a>. All Rights Reserved.
             </span>
-            <div class="flex mt-4 sm:justify-center sm:mt-0 gap-3">
+            <div className="flex mt-4 sm:justify-center sm:mt-0 gap-3">
               <IconBrandGoogle size={16} className="text-white" />
               <IconX size={16} className="text-white" />
               <IconBrandWhatsapp size={16} className="text-white" />

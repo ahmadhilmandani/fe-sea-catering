@@ -342,15 +342,15 @@ export default function OrderMealIndex() {
         <Modal modalTitle={"Detail Makanan"} confrimButtonTxt={'Pesan'} confrimButtonClick={() => {
           dispatch(setIsOpen(false))
         }}>
-          <div class="p-5">
-            <h3 class="text-2xl font-semibold text-balance">
+          <div className="p-5">
+            <h3 className="text-2xl font-semibold text-balance">
               {meals[detailMealIndex]?.title}
             </h3>
             <div className="mb-3 text-primary-700 font-semibold mt-[-12px]">
               Rp. {meals[detailMealIndex]?.price}
             </div>
 
-            <p class="mb-5 font-normal text-gray-700">{meals[detailMealIndex]?.desciption}</p>
+            <p className="mb-5 font-normal text-gray-700">{meals[detailMealIndex]?.desciption}</p>
 
             <div className="flex mb-5 gap-2 flex-wrap">
               {meals[detailMealIndex]?.dietTypeTime?.map((val) => {

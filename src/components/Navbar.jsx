@@ -21,6 +21,9 @@ export default function Navbar() {
           Lovely Services
         </a>
         <a>
+          Testimoni
+        </a>
+        <a>
           How to?
         </a>
       </div>
