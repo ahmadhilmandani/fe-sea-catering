@@ -10,10 +10,9 @@ import { setIsOpen } from "../../redux/slices/modalSlice"
 const FILTER_OPT = {
   all: 'semua',
   balanced: 'diet seimbang',
-  keto: 'diet keto',
-  vegetarian: 'vegetarian',
   lowCalorie: 'rendah kalori',
-  highProtein: 'tinggi protein'
+  highProtein: 'tinggi protein',
+  royal: 'royal',
 }
 
 
@@ -85,131 +84,7 @@ export default function OrderMealIndex() {
       dietGoodFor: ["Menjaga energi harian"]
     },
 
-    // === Diet Keto ===
-    {
-      title: "Telur Orak-Arik + Alpukat",
-      price: 35000,
-      desciption: "Telur ditumis ringan dengan alpukat segar",
-      diet: FILTER_OPT.keto,
-      dietTypeTime: ["sarapan"],
-      nutrition: {
-        protein: { value: 20, unit: "g" },
-        calorie: { value: 280, unit: "kkal" }
-      },
-      dietGoodFor: ["Menurunkan berat badan", "Keto-friendly"]
-    },
-    {
-      title: "Salmon Panggang + Asparagus",
-      price: 55000,
-      desciption: "Kaya lemak sehat dan rendah karbo",
-      diet: FILTER_OPT.keto,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 30, unit: "g" },
-        calorie: { value: 400, unit: "kkal" }
-      },
-      dietGoodFor: ["Keto-friendly"]
-    },
-    {
-      title: "Dada Ayam + Saus Keju + Sayur Kukus",
-      price: 42000,
-      desciption: "Menu tinggi protein dan lemak sehat",
-      diet: FILTER_OPT.keto,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 35, unit: "g" },
-        calorie: { value: 450, unit: "kkal" }
-      },
-      dietGoodFor: ["Keto-friendly"]
-    },
-    {
-      title: "Beef Patty + Keju + Telur",
-      price: 50000,
-      desciption: "Menu tinggi protein dan tanpa karbohidrat",
-      diet: FILTER_OPT.keto,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 40, unit: "g" },
-        calorie: { value: 500, unit: "kkal" }
-      },
-      dietGoodFor: ["Keto-friendly"]
-    },
-    {
-      title: "Tumis Jamur dan Keju Parmesan",
-      price: 32000,
-      desciption: "Menu vegetarian keto dengan rasa gurih",
-      diet: FILTER_OPT.keto,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 15, unit: "g" },
-        calorie: { value: 350, unit: "kkal" }
-      },
-      dietGoodFor: ["Keto-friendly", "Rendah karbo"]
-    },
-
-    // === Diet Vegetarian ===
-    {
-      title: "Nasi Putih + Tempe + Capcay",
-      price: 30000,
-      desciption: "Menu vegetarian lengkap dengan sayur dan protein nabati",
-      diet: FILTER_OPT.vegetarian,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 18, unit: "g" },
-        calorie: { value: 400, unit: "kkal" }
-      },
-      dietGoodFor: ["Vegetarian", "Vegan-friendly"]
-    },
-    {
-      title: "Sup Sayur + Roti Gandum",
-      price: 25000,
-      desciption: "Sayur berkuah segar dengan tambahan serat dari roti",
-      diet: FILTER_OPT.vegetarian,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 8, unit: "g" },
-        calorie: { value: 200, unit: "kkal" }
-      },
-      dietGoodFor: ["Vegan-friendly"]
-    },
-    {
-      title: "Smoothie Pisang + Oats",
-      price: 22000,
-      desciption: "Menu sarapan cepat saji dan bergizi",
-      diet: FILTER_OPT.vegetarian,
-      dietTypeTime: ["sarapan"],
-      nutrition: {
-        protein: { value: 10, unit: "g" },
-        calorie: { value: 280, unit: "kkal" }
-      },
-      dietGoodFor: ["Vegan-friendly"]
-    },
-    {
-      title: "Salad Quinoa + Edamame + Jagung",
-      price: 32000,
-      desciption: "Salad vegetarian tinggi protein nabati",
-      diet: FILTER_OPT.vegetarian,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 16, unit: "g" },
-        calorie: { value: 340, unit: "kkal" }
-      },
-      dietGoodFor: ["Vegetarian", "Rendah kolesterol"]
-    },
-    {
-      title: "Tumis Tahu Brokoli",
-      price: 28000,
-      desciption: "Tahu sebagai sumber protein utama, brokoli untuk serat",
-      diet: FILTER_OPT.vegetarian,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 14, unit: "g" },
-        calorie: { value: 260, unit: "kkal" }
-      },
-      dietGoodFor: ["Vegetarian", "Menurunkan kolesterol"]
-    },
-
-    // === Diet Menambah Massa Otot ===
+    // === Diet Tinggi Protein ===
     {
       title: "Dada Ayam + Nasi Putih + Telur Rebus",
       price: 45000,
@@ -331,12 +206,78 @@ export default function OrderMealIndex() {
         calorie: { value: 170, unit: "kkal" }
       },
       dietGoodFor: ["Menurunkan berat badan", "Lactose-free"]
+    },
+
+
+    // === Diet royal ===
+    {
+      title: "Wagyu Steak + Sayur Panggang",
+      price: 120000,
+      desciption: "Daging wagyu royal disajikan dengan sayur panggang dan saus red wine",
+      diet: FILTER_OPT?.royal,
+      dietTypeTime: ["makan malam"],
+      nutrition: {
+        protein: { value: 50, unit: "g" },
+        calorie: { value: 700, unit: "kkal" }
+      },
+      dietGoodFor: [
+        "Menambah energi tinggi",
+        "Asupan gizi maksimal",
+        "royal fine dining"
+      ]
+    },
+    {
+      title: "Lobster Thermidor + Buttered Veggies",
+      price: 135000,
+      desciption: "Lobster dimasak dengan krim keju, disajikan dengan sayuran mentega",
+      diet: FILTER_OPT?.royal,
+      dietTypeTime: ["makan siang"],
+      nutrition: {
+        protein: { value: 42, unit: "g" },
+        calorie: { value: 650, unit: "kkal" }
+      },
+      dietGoodFor: [
+        "Kaya omega-3",
+        "Menu eksklusif seafood",
+        "Asupan protein berkualitas"
+      ]
+    },
+    {
+      title: "Salmon Fillet + Avocado Salad",
+      price: 110000,
+      desciption: "Salmon panggang segar disajikan dengan salad alpukat dan kacang-kacangan",
+      diet: FILTER_OPT?.royal,
+      dietTypeTime: ["makan malam"],
+      nutrition: {
+        protein: { value: 35, unit: "g" },
+        calorie: { value: 600, unit: "kkal" }
+      },
+      dietGoodFor: [
+        "Kaya omega-3 & lemak sehat",
+        "Kulit lebih sehat",
+        "Pilihan sehat & mewah"
+      ]
+    },
+    {
+      title: "Duck Confit + Kentang Lembut",
+      price: 125000,
+      desciption: "Bebek dimasak perlahan hingga empuk, disajikan dengan kentang tumbuk royal",
+      diet: FILTER_OPT?.royal,
+      dietTypeTime: ["makan malam"],
+      nutrition: {
+        protein: { value: 40, unit: "g" },
+        calorie: { value: 680, unit: "kkal" }
+      },
+      dietGoodFor: [
+        "Meningkatkan stamina",
+        "Pengalaman makan eksklusif",
+        "Rasa mewah & klasik"
+      ]
     }
   ];
 
 
   return (
-
     <>
       {isModalOpen &&
         <Modal modalTitle={"Detail Makanan"} confrimButtonTxt={'Pesan'} confrimButtonClick={() => {
@@ -410,16 +351,13 @@ export default function OrderMealIndex() {
                 <div onClick={() => { setActiveFilter(FILTER_OPT.balanced) }} className={`${activeFilter == FILTER_OPT.balanced ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.balanced}</div>
               </li>
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.keto) }} className={`${activeFilter == FILTER_OPT.keto ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.keto}</div>
-              </li>
-              <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.vegetarian) }} className={`${activeFilter == FILTER_OPT.vegetarian ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.vegetarian}</div>
-              </li>
-              <li>
                 <div onClick={() => { setActiveFilter(FILTER_OPT.lowCalorie) }} className={`${activeFilter == FILTER_OPT.lowCalorie ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.lowCalorie}</div>
               </li>
               <li>
                 <div onClick={() => { setActiveFilter(FILTER_OPT.highProtein) }} className={`${activeFilter == FILTER_OPT.highProtein ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.highProtein}</div>
+              </li>
+              <li>
+                <div onClick={() => { setActiveFilter(FILTER_OPT.royal) }} className={`${activeFilter == FILTER_OPT.royal ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.royal}</div>
               </li>
             </ul>
           </div>

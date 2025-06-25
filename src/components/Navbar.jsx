@@ -32,7 +32,7 @@ export default function Navbar() {
         <Link to={'/order-meal'} className={`${useMatch('/order-meal') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Order Meal
         </Link>
-        <Link className={`${useMatch('/subscribe') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
+        <Link to={'/subscription'} className={`${useMatch('/subscription') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Subscribe
         </Link>
         <Link className={`${useMatch('/contact') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>

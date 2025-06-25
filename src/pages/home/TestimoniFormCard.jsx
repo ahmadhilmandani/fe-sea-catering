@@ -25,25 +25,21 @@ export default function TestimoniFormCard() {
           />
         </div>
         <div className="mb-5">
-
           <Input
             valueProp={customerOrigin} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setCustomerOrigin}
           />
         </div>
 
         <div className="mb-5">
-
           <Input
             valueProp={customerTesti} labelProp={'Testimoni'} placeholderProp={'cth: Saya Sangat Suka Dengan Makanan Tinggi Protein Di SEA Catering'} typeProp={'text'} inputId={'testimoni'} onChangeProp={setCustomerTesti}
           />
         </div>
-
         <div className="w-72 mx-auto">
           <Button isExtend={true} buttonType="primary">
             Kirim
           </Button>
         </div>
-
       </form>
     </>
   )
