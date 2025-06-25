@@ -31,6 +31,16 @@ export default function Button({ onClickProp = () => { }, buttonType = BUTTON_TY
       </>
     )
   }
+  else {
+    return (
+      <>
+        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 bg-gray-100 hover:bg-gray-50 text-gray-500 hover:text-gray-600 font-medium rounded-full px-10 py-2.5 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+          {isLoading && <IconLoader2 className="animate-spin text-sm" />}
+          {children}
+        </button>
+      </>
+    )
+  }
   // else if (buttonType == BUTTON_TYPE.DANGER) {
   //   return (
   //     <>

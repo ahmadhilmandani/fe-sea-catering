@@ -1,6 +1,6 @@
 import { useState } from "react"
 import HeroImg from "../../assets/img/hero-img-reduce.jpg"
-import OrderMealCard from "../../components/orderMeal/orderMeal."
+import OrderMealCard from "../../components/orderMeal/orderMealCard"
 import Modal from "../../components/Modal"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
