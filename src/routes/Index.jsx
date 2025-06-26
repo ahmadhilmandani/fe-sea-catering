@@ -3,6 +3,8 @@ import HomeIndex from "../pages/home/Index";
 import MainLayout from "../layouts/MainLayout";
 import OrderMealIndex from "../pages/orderMeal/Index";
 import SubscriptionIndex from "../pages/subscription/Index";
+import LoginIndex from "../pages/login/Index";
+import RegisterIndex from "../pages/register/Index";
 
 
 export const router = createBrowserRouter([
@@ -21,6 +23,14 @@ export const router = createBrowserRouter([
       {
         path: '/subscription',
         element: <SubscriptionIndex />
+      },
+      {
+        path: '/login',
+        element: <LoginIndex />
+      },
+      {
+        path: '/register',
+        element: <RegisterIndex />
       },
     ]
   }

@@ -38,12 +38,12 @@ export default function Navbar() {
         <Link className={`${useMatch('/contact') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Contact
         </Link>
-        <Link>
+        <Link to={'/register'}>
           <Button buttonType="primary">
             Daftar
           </Button>
         </Link>
-        <Link className="border-b font-semibold">
+        <Link to={'/login'} className={`${useMatch('/contact') ? 'text-primary-700 font-semibold border-b border-primary-800' : 'border-b font-semibold hover:cursor-pointer'} `}>
           Login
         </Link>
       </div>
