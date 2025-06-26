@@ -26,7 +26,7 @@ export default function RegisterIndex() {
       return toast.error("Tolong Isi Semua Kolom");
     }
 
-    if (password || confirmPassword) {
+    if (password != confirmPassword) {
       return toast.error("Password dan Konfirmasi Password Tidak sama");
     }
 
@@ -40,11 +40,12 @@ export default function RegisterIndex() {
     }
     const res = await register(payload)
     if (res?.data?.is_error) {
-      toast.error("Gagal");
+      toast.error(res.data.msg);
     } else {
       toast.success('Sekarang, Tolong Login pakai Akun yang dibuat barusan, thanks!');
       navigate('/login')
     }
+
     dispatch(setLoader(false))
   }
 
@@ -90,7 +91,7 @@ export default function RegisterIndex() {
             </div>
             <div className="mb-8">
               <Input
-                isRequired={true} valueProp={confirm} labelProp={'Konfirmasi Password'} placeholderProp={'cth: Password123!'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setConfirmPassword}
+                isRequired={true} valueProp={confirmPassword} labelProp={'Konfirmasi Password'} placeholderProp={'cth: Password123!'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setConfirmPassword}
               />
             </div>
             <div className="mb-12 flex gap-2 items-center text-gray-500">
