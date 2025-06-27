@@ -3,11 +3,13 @@ import LogoSEA from "../assets/logo/logo-sea-catering.png"
 import Button from "./Button"
 import { useState } from "react"
 import { IconChevronDown, IconChevronUp, IconDashboard, IconLogout2, IconUserFilled } from "@tabler/icons-react"
+import { useSelector } from "react-redux"
 
 export default function Navbar() {
-  const [isLogin] = useState(localStorage.getItem('token'))
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const isOnLoginPage = useMatch('/login')
+  const authSlice = useSelector((state)=>state.authSlice.userInfo)
+  
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-[80px] bg-base-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex justify-between items-center px-12 py-3 gap-12 z-50">
@@ -43,7 +45,7 @@ export default function Navbar() {
         <Link className={`${useMatch('/contact') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Contact
         </Link>
-        {isLogin ? <>
+        {authSlice ? <>
           <div className="max-w-64 w-full relative">
             <Button buttonType="primary" isExtend={true} onClickProp={() => {
               setIsDropdownOpen((state) => !state)

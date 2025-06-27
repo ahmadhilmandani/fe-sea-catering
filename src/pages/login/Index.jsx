@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
 import { setLoader } from "../../redux/slices/loaderSlice"
 import { login } from "../../api/login"
+import { setUserInfo } from "../../redux/slices/authSlice"
 
 
 export default function LoginIndex() {
@@ -32,6 +33,14 @@ export default function LoginIndex() {
     } else {
       localStorage.setItem('userId', res.data.result.user_id)
       localStorage.setItem('token', res.data.result.token)
+      
+      dispatch(setUserInfo({
+        user_id: res.data.result.user_id,
+        name: res.data.result.name,
+        email: res.data.result.email,
+        address: res.data.result.address,
+      }))
+      
       toast.success('Selamat Datang!');
       navigate('/')
     }

@@ -1,29 +1,28 @@
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import Input from "../../components/Input";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Button from "../../components/Button";
-import { getUserInfo } from "../../api/getUserInfo";
 import { postTestimoni } from "../../api/postTestimoni";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../redux/slices/loaderSlice";
 import { toast } from "react-toastify";
 import { getTestimoni } from "../../api/getTestimoni";
 
 export default function TestimoniFormCard() {
-  const [userInfo, setUserInfo] = useState()
   const [customerName, setCustomerName] = useState('')
   const [customerOrigin, setCustomerOrigin] = useState('')
   const [star, setStar] = useState('')
   const [customerTesti, setCustomerTesti] = useState('')
   const dispatch = useDispatch()
+  const authSlice = useSelector((state)=>state.authSlice.userInfo)
 
 
   const handleSubmitTestimoni = async () => {
     dispatch(setLoader(true))
 
     const resp = await postTestimoni({
-      name: userInfo.name || customerName,
-      address: userInfo.address || customerOrigin,
+      name: authSlice.name || customerName,
+      address: authSlice.address || customerOrigin,
       star: star,
       testimoni: customerTesti
     })
@@ -39,14 +38,6 @@ export default function TestimoniFormCard() {
     dispatch(setLoader(false))
   }
 
-  useEffect(() => {
-    const handleGetUserInfo = async () => {
-      const resp = await getUserInfo()
-      setUserInfo(resp.data.result.user)
-    }
-
-    handleGetUserInfo()
-  }, [])
 
   return (
     <>
@@ -61,9 +52,9 @@ export default function TestimoniFormCard() {
         </div>
         <div className="mb-5">
           {
-            userInfo ?
+            authSlice ?
               <Input
-                valueProp={userInfo.name} isReadOnly={true} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={setCustomerName}
+                valueProp={authSlice.name} isReadOnly={true} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={setCustomerName}
               /> :
               <Input
                 valueProp={customerName} isRequired={true} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={setCustomerName}
@@ -72,9 +63,9 @@ export default function TestimoniFormCard() {
         </div>
         <div className="mb-5">
           {
-            userInfo ?
+            authSlice ?
               <Input
-                valueProp={userInfo.address} isReadOnly={true} labelProp={'Asal'} placeholderProp={'cth: Sumenep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setCustomerOrigin}
+                valueProp={authSlice.address} isReadOnly={true} labelProp={'Asal'} placeholderProp={'cth: Sumenep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setCustomerOrigin}
               /> :
               <Input
                 valueProp={customerOrigin} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setCustomerOrigin}
