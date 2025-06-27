@@ -60,11 +60,11 @@ export default function HomeIndex() {
             </div>
           </div>
         </section>
-        <section className="py-24">
+        <section id="service" className="py-36">
           <div className="flex gap-32 justify-center items-center">
             <div className="max-w-[480px] flex-1">
               <IconSalad size={56} stroke={1.3} className="mb-5 text-primary-600" />
-              <h2 className="text-primary-700 font-semibold">
+              <h2  className="text-primary-700 font-semibold">
                 Lovely Services
                 <br />
                 <span className="text-4xl text-black text-balance">
@@ -112,7 +112,7 @@ export default function HomeIndex() {
             </div>
           </div>
         </section>
-        <section className="h-screen py-24 flex justify-center items-center">
+        <section id="howto" className="h-screen py-36 flex justify-center items-center">
           <div>
             <div className="text-center">
               <h2 className="font-semibold mb-24">
@@ -165,7 +165,7 @@ export default function HomeIndex() {
             </ol>
           </div>
         </section>
-        <section className="min-h-screen py-24">
+        <section id="testimoni" className="min-h-screen py-24">
           <h2 className="font-semibold mb-8 text-center">
             Testimonial
           </h2>

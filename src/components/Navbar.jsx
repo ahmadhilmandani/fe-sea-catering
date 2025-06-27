@@ -22,13 +22,13 @@ export default function Navbar() {
         <Link to={'/'} className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Home
         </Link>
-        <a>
+        <a href="#service">
           Lovely Services
         </a>
-        <a>
+        <a href="#testimoni">
           Testimoni
         </a>
-        <a>
+        <a href="#howto">
           How to?
         </a>
       </div>
