@@ -57,7 +57,7 @@ export default function LoginIndex() {
           </div>
           <div className="mb-8">
             <Input
-              isRequired={true} valueProp={password} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setPassword}
+              isRequired={true} valueProp={password} labelProp={'Password'} placeholderProp={'cth: Sumeep'} typeProp={'password'} inputId={'customer-origin'} onChangeProp={setPassword}
             />
           </div>
           <div className="mb-12 flex gap-2 items-center text-gray-500">

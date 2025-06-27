@@ -39,7 +39,7 @@ export default function HomeIndex() {
             </div>
           </div>
           <div className="flex gap-20 justify-between items- mb-20">
-            <div className="min-w-[320px] flex-1 aspect-[16_/_8] bg-red-100  bg-cover bg-center bg-no-repeat overflow-hidden rounded-xl" style={{
+            <div className="min-w-[320px] flex-1 aspect-[16_/_8] bg-gray-200 bg-cover bg-center bg-no-repeat overflow-hidden rounded-xl" style={{
               backgroundImage: `url(${HeroImg})`
             }}>
             </div>
