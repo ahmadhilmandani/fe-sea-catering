@@ -6,10 +6,21 @@ import Button from "../../components/Button";
 import TestimoniCard from "./TestimoniCard";
 import Input from "../../components/Input";
 import TestimoniFormCard from "./TestimoniFormCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTestimoni } from "../../api/getTestimoni";
 
 export default function HomeIndex() {
   const [isTestiFormOpen, setIsTestiFormOpen] = useState(false)
+  const [testimonies, setTestimonies] = useState()
+
+  const handleGetTestimonies = async () => {
+    const resp = await getTestimoni(5)
+    setTestimonies(resp.data.result)
+  }
+  useEffect(() => {
+    handleGetTestimonies()
+  }, [])
+
 
   return (
     <div className="relative">
@@ -64,7 +75,7 @@ export default function HomeIndex() {
           <div className="flex gap-32 justify-center items-center">
             <div className="max-w-[480px] flex-1">
               <IconSalad size={56} stroke={1.3} className="mb-5 text-primary-600" />
-              <h2  className="text-primary-700 font-semibold">
+              <h2 className="text-primary-700 font-semibold">
                 Lovely Services
                 <br />
                 <span className="text-4xl text-black text-balance">
@@ -169,10 +180,12 @@ export default function HomeIndex() {
           <h2 className="font-semibold mb-8 text-center">
             Testimonial
           </h2>
-          <div className="max-w-6xl w-full overflow-x-auto flex pl-10 gap-12 mb-12 mx-auto">
-            <TestimoniCard />
-            <TestimoniCard />
-            <TestimoniCard />
+          <div className="max-w-6xl w-full overflow-x-auto flex pl-10 gap-12 mb-12 mx-auto pb-8">
+            {testimonies?.map((element) => {
+              return (
+                <TestimoniCard address={element.address} name={element.name} star={element.star} testimoni={element.testimoni} />
+              )
+            })}
           </div>
           <p className="mb-2 text-center">Kalau kamu pernah menggunakan layanan kami, maka apresiasi yang besar bila kamu juga memberikan testimoni ! </p>
           {isTestiFormOpen ?
