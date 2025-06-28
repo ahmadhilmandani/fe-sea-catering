@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
-import HeroImg from "../../assets/img/hero-img-reduce.jpg"
 import OrderMealCard from "../../components/orderMeal/orderMealCard"
 import Modal from "../../components/Modal"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { setIsOpen } from "../../redux/slices/modalSlice"
 import { getFoodMenu } from "../../api/getFoodMenu"
+import Input from "../../components/Input"
+import { postOrderMealReg } from "../../api/postOrderMealReg"
+import { setLoader } from "../../redux/slices/loaderSlice"
+import { toast } from "react-toastify"
+import ScreenLoading from "../../components/ScreenLoading"
+import { postOrderMealUnreg } from "../../api/postOrderMealUnreg"
 
 
 const FILTER_OPT = {
@@ -21,282 +26,74 @@ export default function OrderMealIndex() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [detailMealIndex, setDetailMealIndex] = useState(null)
   const [foodMenu, setFoodMenu] = useState()
+  const [name, setName] = useState()
+  const [address, setAddress] = useState()
+  const [phoneNumber, setPhoneNumber] = useState()
+  const [dayDeliver, setDayDeliver] = useState(1)
+  const [timeDeliver, setTimeDeliver] = useState()
+  const authSlice = useSelector((state) => state.authSlice.userInfo)
 
   const dispatch = useDispatch()
   const isModalOpen = useSelector((state) => state.modalSlice.isOpen)
 
+  const handlePostFoodMenu = async () => {
+    dispatch(setLoader(true))
+
+    const payload = {
+      "name": name,
+      "address": address,
+      "phone_number": phoneNumber,
+      "id_user": authSlice?.user_id,
+      "id_delivery_type": dayDeliver,
+      "id_food_menu": foodMenu[detailMealIndex]?.id_food_menu,
+      "deliver_date_schedule": timeDeliver,
+      "is_send": 0
+    }
+    let resp
+
+    if (!authSlice) {
+      resp = await postOrderMealUnreg(payload)
+    } else {
+      resp = await postOrderMealReg(payload)
+    }
+
+    if (resp?.data?.is_error) {
+      toast.error(resp.data.msg);
+    } else {
+      toast.success("Terima Kasih, Pesanan Anda Sedang Diproses")
+      dispatch(setIsOpen(false))
+    }
+    dispatch(setLoader(false))
+  }
+
   const handleGetFoodMenu = async () => {
+    dispatch(setLoader(true))
+
     const resp = await getFoodMenu()
-    setFoodMenu(resp.data.result)
+
+    if (resp?.data?.is_error) {
+      toast.error(resp.data.msg);
+    } else {
+      setFoodMenu(resp.data.result)
+    }
+    dispatch(setLoader(false))
   }
 
   useEffect(() => {
     handleGetFoodMenu()
   }, [])
 
-  const meals = [
-    // === Diet Seimbang ===
-    {
-      title: "Gado-gado",
-      price: 30000,
-      desciption: "Campuran sayuran rebus, telur, tempe, dan bumbu kacang",
-      diet: FILTER_OPT.balanced,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 14, unit: "g" },
-        calorie: { value: 320, unit: "kkal" }
-      },
-      dietGoodFor: ["Menjaga pola makan sehat", "Vegan-friendly"]
-    },
-    {
-      title: "Nasi Merah + Ayam Panggang + Sayur Rebus",
-      price: 35000,
-      desciption: "Karbohidrat kompleks, protein tanpa lemak, dan serat tinggi",
-      diet: FILTER_OPT.balanced,
-      dietTypeTime: ["makan siang", "makan malam"],
-      nutrition: {
-        protein: { value: 26, unit: "g" },
-        calorie: { value: 420, unit: "kkal" }
-      },
-      dietGoodFor: ["Menjaga pola makan sehat"]
-    },
-    {
-      title: "Oatmeal + Buah + Telur Rebus",
-      price: 25000,
-      desciption: "Menu lengkap untuk sarapan bernutrisi seimbang",
-      diet: FILTER_OPT.balanced,
-      dietTypeTime: ["sarapan"],
-      nutrition: {
-        protein: { value: 20, unit: "g" },
-        calorie: { value: 390, unit: "kkal" }
-      },
-      dietGoodFor: ["Menjaga pola makan sehat"]
-    },
-    {
-      title: "Ikan Bakar + Tumis Brokoli + Ubi Rebus",
-      price: 40000,
-      desciption: "Sumber protein, serat, dan karbo sehat",
-      diet: FILTER_OPT.balanced,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 30, unit: "g" },
-        calorie: { value: 450, unit: "kkal" }
-      },
-      dietGoodFor: ["Menjaga pola makan sehat"]
-    },
-    {
-      title: "Smoothie Alpukat + Roti Gandum",
-      price: 28000,
-      desciption: "Lemak sehat dan karbo kompleks untuk energi pagi",
-      diet: FILTER_OPT.balanced,
-      dietTypeTime: ["sarapan"],
-      nutrition: {
-        protein: { value: 10, unit: "g" },
-        calorie: { value: 330, unit: "kkal" }
-      },
-      dietGoodFor: ["Menjaga energi harian"]
-    },
-
-    // === Diet Tinggi Protein ===
-    {
-      title: "Dada Ayam + Nasi Putih + Telur Rebus",
-      price: 45000,
-      desciption: "Sumber protein tinggi untuk bantu pertumbuhan otot",
-      diet: FILTER_OPT.highProtein,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 40, unit: "g" },
-        calorie: { value: 520, unit: "kkal" }
-      },
-      dietGoodFor: ["Meningkatkan massa otot"]
-    },
-    {
-      title: "Steak Daging Sapi + Kentang Rebus",
-      price: 60000,
-      desciption: "Sumber kalori dan protein tinggi untuk otot",
-      diet: FILTER_OPT.highProtein,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 45, unit: "g" },
-        calorie: { value: 600, unit: "kkal" }
-      },
-      dietGoodFor: ["Meningkatkan massa otot"]
-    },
-    {
-      title: "Protein Shake + Roti Gandum",
-      price: 35000,
-      desciption: "Shake whey protein dan karbo cepat serap",
-      diet: FILTER_OPT.highProtein,
-      dietTypeTime: ["snack"],
-      nutrition: {
-        protein: { value: 30, unit: "g" },
-        calorie: { value: 380, unit: "kkal" }
-      },
-      dietGoodFor: ["Meningkatkan massa otot"]
-    },
-    {
-      title: "Tempe Goreng + Nasi Merah + Sayur Bening",
-      price: 30000,
-      desciption: "Protein nabati untuk otot dan serat tinggi",
-      diet: FILTER_OPT.highProtein,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 25, unit: "g" },
-        calorie: { value: 450, unit: "kkal" }
-      },
-      dietGoodFor: ["Meningkatkan massa otot", "Vegetarian"]
-    },
-    {
-      title: "Salmon + Telur + Brokoli",
-      price: 55000,
-      desciption: "Kombinasi superfood untuk pembentukan otot",
-      diet: FILTER_OPT.highProtein,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 42, unit: "g" },
-        calorie: { value: 480, unit: "kkal" }
-      },
-      dietGoodFor: ["Meningkatkan massa otot"]
-    },
-
-    // === Diet Rendah Kalori ===
-    {
-      title: "Salad Ayam + Minyak Zaitun",
-      price: 30000,
-      desciption: "Salad rendah kalori dengan ayam tanpa kulit dan dressing zaitun",
-      diet: FILTER_OPT.lowCalorie,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 18, unit: "g" },
-        calorie: { value: 220, unit: "kkal" }
-      },
-      dietGoodFor: ["Menurunkan berat badan", "Gluten-free"]
-    },
-    {
-      title: "Oatmeal + Potongan Apel",
-      price: 22000,
-      desciption: "Sarapan ringan kaya serat dan vitamin",
-      diet: FILTER_OPT.lowCalorie,
-      dietTypeTime: ["sarapan"],
-      nutrition: {
-        protein: { value: 6, unit: "g" },
-        calorie: { value: 180, unit: "kkal" }
-      },
-      dietGoodFor: ["Menurunkan berat badan"]
-    },
-    {
-      title: "Dada Ayam Rebus + Sayur Rebus",
-      price: 32000,
-      desciption: "Menu tanpa minyak, tinggi protein, rendah kalori",
-      diet: FILTER_OPT.lowCalorie,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 28, unit: "g" },
-        calorie: { value: 260, unit: "kkal" }
-      },
-      dietGoodFor: ["Cutting", "Menurunkan berat badan"]
-    },
-    {
-      title: "Sup Bening Tofu + Wortel",
-      price: 25000,
-      desciption: "Sup ringan dan bergizi untuk malam hari",
-      diet: FILTER_OPT.lowCalorie,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 12, unit: "g" },
-        calorie: { value: 180, unit: "kkal" }
-      },
-      dietGoodFor: ["Menurunkan berat badan", "Vegan-friendly"]
-    },
-    {
-      title: "Smoothie Strawberry + Susu Almond",
-      price: 28000,
-      desciption: "Minuman rendah kalori tapi tetap lezat",
-      diet: FILTER_OPT.lowCalorie,
-      dietTypeTime: ["sarapan", "snack"],
-      nutrition: {
-        protein: { value: 8, unit: "g" },
-        calorie: { value: 170, unit: "kkal" }
-      },
-      dietGoodFor: ["Menurunkan berat badan", "Lactose-free"]
-    },
-
-
-    // === Diet royal ===
-    {
-      title: "Wagyu Steak + Sayur Panggang",
-      price: 120000,
-      desciption: "Daging wagyu royal disajikan dengan sayur panggang dan saus red wine",
-      diet: FILTER_OPT?.royal,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 50, unit: "g" },
-        calorie: { value: 700, unit: "kkal" }
-      },
-      dietGoodFor: [
-        "Menambah energi tinggi",
-        "Asupan gizi maksimal",
-        "royal fine dining"
-      ]
-    },
-    {
-      title: "Lobster Thermidor + Buttered Veggies",
-      price: 135000,
-      desciption: "Lobster dimasak dengan krim keju, disajikan dengan sayuran mentega",
-      diet: FILTER_OPT?.royal,
-      dietTypeTime: ["makan siang"],
-      nutrition: {
-        protein: { value: 42, unit: "g" },
-        calorie: { value: 650, unit: "kkal" }
-      },
-      dietGoodFor: [
-        "Kaya omega-3",
-        "Menu eksklusif seafood",
-        "Asupan protein berkualitas"
-      ]
-    },
-    {
-      title: "Salmon Fillet + Avocado Salad",
-      price: 110000,
-      desciption: "Salmon panggang segar disajikan dengan salad alpukat dan kacang-kacangan",
-      diet: FILTER_OPT?.royal,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 35, unit: "g" },
-        calorie: { value: 600, unit: "kkal" }
-      },
-      dietGoodFor: [
-        "Kaya omega-3 & lemak sehat",
-        "Kulit lebih sehat",
-        "Pilihan sehat & mewah"
-      ]
-    },
-    {
-      title: "Duck Confit + Kentang Lembut",
-      price: 125000,
-      desciption: "Bebek dimasak perlahan hingga empuk, disajikan dengan kentang tumbuk royal",
-      diet: FILTER_OPT?.royal,
-      dietTypeTime: ["makan malam"],
-      nutrition: {
-        protein: { value: 40, unit: "g" },
-        calorie: { value: 680, unit: "kkal" }
-      },
-      dietGoodFor: [
-        "Meningkatkan stamina",
-        "Pengalaman makan eksklusif",
-        "Rasa mewah & klasik"
-      ]
-    }
-  ];
+  const isLoading = useSelector((state) => state.loaderSlice.isLoading)
 
 
   return (
+
     <>
+      {isLoading && <ScreenLoading />}
+
       {
         isModalOpen &&
-        <Modal modalTitle={"Detail Makanan"} confrimButtonTxt={'Pesan'} confrimButtonClick={() => {
-          dispatch(setIsOpen(false))
-        }}>
+        <Modal modalTitle={"Detail Makanan"} confrimButtonTxt={'Pesan'} confrimButtonClick={handlePostFoodMenu}>
           <div className="p-5">
             <h3 className="text-2xl font-semibold text-balance">
               {foodMenu[detailMealIndex]?.title}
@@ -308,7 +105,7 @@ export default function OrderMealIndex() {
             <p className="mb-5 font-normal text-gray-700">{foodMenu[detailMealIndex]?.desciption}</p>
 
             <div className="flex mb-5 gap-2 flex-wrap">
-              {foodMenu[detailMealIndex].nutrition.map((element) => {
+              {foodMenu[detailMealIndex]?.nutrition.map((element) => {
                 return (
                   <>
                     <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
@@ -320,20 +117,67 @@ export default function OrderMealIndex() {
                 )
               })}
             </div>
-
             <div className="mb-3 font-semibold">
               Cocok Untuk :
             </div>
-            <div className="">
+            <div className="mb-10">
               <ol className="list-disc list-inside">
                 <li className="text-xs mb-3">
                   {foodMenu[detailMealIndex]?.recomended_for}
                 </li>
               </ol>
             </div>
+            <div className="mx-[-32px] border-t border-gray-200 pt-5">
+              {
+                !authSlice &&
+                <div className="flex flex-wrap gap-2 items-center px-8 mb-2">
+                  <div className="min-w-[200px] flex-1">
+                    <Input valueProp={name} labelProp={"Nama"} placeholderProp={'cth: budi andi'} typeProp={'text'} inputId={'nama'} onChangeProp={setName} isRequired={true} />
+                  </div>
+                  <div className="min-w-[200px] flex-1">
+                    <Input valueProp={address} labelProp={"Alamat"} placeholderProp={'cth: budi andi'} typeProp={'text'} inputId={'alamat'} onChangeProp={setAddress} isRequired={true} />
+                  </div>
+                  <div className="min-w-[200px] flex-1">
+                    <Input valueProp={phoneNumber} labelProp={"Alamat"} placeholderProp={'cth: budi andi'} typeProp={'text'} inputId={'alamat'} onChangeProp={setPhoneNumber} isRequired={true} />
+                  </div>
+                </div>
+              }
+              <div className="flex flex-wrap gap-2 items-center px-8">
+                <div className="min-w-[200px] flex-1">
+                  <label className="block mb-2 font-semibold">{"Hari - Waktu"} <span className="text-red-500 inline-block ml-2">*</span></label>
+                  <select id="" className="py-2 px-3 border border-gray-300 bg-gray-50 rounded-lg w-full" onChange={(e) => { setDayDeliver(e.target.value) }}>
+                    <option value="1">senin - pagi</option>
+                    <option value="2">senin - siang</option>
+                    <option value="3">senin - malam</option>
+                    <option value="4">selasa - pagi</option>
+                    <option value="5">selasa - siang</option>
+                    <option value="6">selasa - malam</option>
+                    <option value="7">rabu - pagi</option>
+                    <option value="8">rabu - siang</option>
+                    <option value="9">rabu - malam</option>
+                    <option value="10">kamis - pagi</option>
+                    <option value="11">kamis - siang</option>
+                    <option value="12">kamis - malam</option>
+                    <option value="13">jumat - pagi</option>
+                    <option value="14">jumat - siang</option>
+                    <option value="15">jumat - malam</option>
+                    <option value="16">sabtu - pagi</option>
+                    <option value="17">sabtu - siang</option>
+                    <option value="18">sabtu - malam</option>
+                    <option value="19">minggu - pagi</option>
+                    <option value="20">minggu - siang</option>
+                    <option value="21">minggu - malam</option>
+                  </select>
+                </div>
+                <div className="min-w-[200px] flex-1">
+                  <Input labelProp={'Tgl Untuk Diantarkan'} typeProp={'date'} isRequired={true} valueProp={timeDeliver} onChangeProp={setTimeDeliver} />
+                </div>
+              </div>
+            </div>
           </div>
         </Modal>
       }
+
       <div className="px-12">
         <header className="mb-8">
           <h1 className="text-8xl text-primary-700 text-balance">

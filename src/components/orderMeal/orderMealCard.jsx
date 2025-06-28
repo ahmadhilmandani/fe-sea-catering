@@ -4,7 +4,7 @@ import Button from "../Button"
 
 export default function OrderMealCard({ cardTitle, price, description, nutrition, onClickButton2ndary }) {
   return (
-    <div className="max-w-md w-full aspect-square bg-white border border-gray-200 rounded-xl relative">
+    <div className="max-w-md w-full aspect-[4/3] bg-white border border-gray-200 rounded-xl relative">
       <div className="p-5">
         <h3 className="text-2xl font-semibold text-balance line-clamp-2">
           {cardTitle}
@@ -39,14 +39,6 @@ export default function OrderMealCard({ cardTitle, price, description, nutrition
           <div className="min-w-[200px] flex-1">
             <Button isExtend={true} buttonType="secondary" onClickProp={onClickButton2ndary}>
               Detail
-              <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-              </svg>
-            </Button>
-          </div>
-          <div className="min-w-[200px] flex-1">
-            <Button isExtend={true} buttonType="primary">
-              Pesan
               <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
               </svg>
