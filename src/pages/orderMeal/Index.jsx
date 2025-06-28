@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import HeroImg from "../../assets/img/hero-img-reduce.jpg"
 import OrderMealCard from "../../components/orderMeal/orderMealCard"
 import Modal from "../../components/Modal"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { setIsOpen } from "../../redux/slices/modalSlice"
+import { getFoodMenu } from "../../api/getFoodMenu"
 
 
 const FILTER_OPT = {
@@ -19,8 +20,20 @@ const FILTER_OPT = {
 export default function OrderMealIndex() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [detailMealIndex, setDetailMealIndex] = useState(null)
+  const [foodMenu, setFoodMenu] = useState()
+
   const dispatch = useDispatch()
   const isModalOpen = useSelector((state) => state.modalSlice.isOpen)
+
+  const handleGetFoodMenu = async () => {
+    const resp = await getFoodMenu()
+    setFoodMenu(resp.data.result)
+  }
+
+  useEffect(() => {
+    handleGetFoodMenu()
+  }, [])
+
   const meals = [
     // === Diet Seimbang ===
     {
@@ -279,55 +292,44 @@ export default function OrderMealIndex() {
 
   return (
     <>
-      {isModalOpen &&
+      {
+        isModalOpen &&
         <Modal modalTitle={"Detail Makanan"} confrimButtonTxt={'Pesan'} confrimButtonClick={() => {
           dispatch(setIsOpen(false))
         }}>
           <div className="p-5">
             <h3 className="text-2xl font-semibold text-balance">
-              {meals[detailMealIndex]?.title}
+              {foodMenu[detailMealIndex]?.title}
             </h3>
             <div className="mb-3 text-primary-700 font-semibold mt-[-12px]">
-              Rp. {meals[detailMealIndex]?.price}
+              Rp. {foodMenu[detailMealIndex]?.price}
             </div>
 
-            <p className="mb-5 font-normal text-gray-700">{meals[detailMealIndex]?.desciption}</p>
+            <p className="mb-5 font-normal text-gray-700">{foodMenu[detailMealIndex]?.desciption}</p>
 
             <div className="flex mb-5 gap-2 flex-wrap">
-              {meals[detailMealIndex]?.dietTypeTime?.map((val) => {
+              {foodMenu[detailMealIndex].nutrition.map((element) => {
                 return (
-                  <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-                    <div className="font-semibold text-primary-800 text-xs">
-                      {val}
+                  <>
+                    <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
+                      <div className="font-semibold text-primary-800 text-xs">
+                        {element?.name} :  {element?.value} {element?.unit}
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )
               })}
-              <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-                <div className="font-semibold text-primary-800 text-xs">
-                  protein: {meals[detailMealIndex]?.nutrition?.protein?.value} {meals[detailMealIndex]?.nutrition?.protein?.unit}
-                </div>
-              </div>
-              <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-                <div className="font-semibold text-primary-800 text-xs">
-                  protein: {meals[detailMealIndex]?.nutrition?.calorie?.value} {meals[detailMealIndex]?.nutrition?.calorie?.unit}
-                </div>
-              </div>
             </div>
 
             <div className="mb-3 font-semibold">
               Cocok Untuk :
             </div>
             <div className="">
-              {meals[detailMealIndex]?.dietGoodFor?.map((val) => {
-                return (
-                  <ol className="list-disc list-inside">
-                    <li className="text-xs mb-3">
-                      {val}
-                    </li>
-                  </ol>
-                )
-              })}
+              <ol className="list-disc list-inside">
+                <li className="text-xs mb-3">
+                  {foodMenu[detailMealIndex]?.recomended_for}
+                </li>
+              </ol>
             </div>
           </div>
         </Modal>
@@ -362,13 +364,12 @@ export default function OrderMealIndex() {
             </ul>
           </div>
           <div className="flex gap-12 flex-wrap justify-center">
-            {meals.map((val, index) => {
+            {foodMenu?.map((val, index) => {
               return (
                 <OrderMealCard
                   cardTitle={val.title}
                   price={val.price}
                   description={val.desciption}
-                  dietTypeTime={val.dietTypeTime}
                   nutrition={val.nutrition}
                   onClickButton2ndary={() => {
                     setDetailMealIndex(index)

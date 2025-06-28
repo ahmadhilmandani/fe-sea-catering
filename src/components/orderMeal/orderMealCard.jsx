@@ -2,14 +2,9 @@
 import Button from "../Button"
 
 
-export default function OrderMealCard({ cardTitle, price, description, dietTypeTime, nutrition, onClickButton2ndary }) {
+export default function OrderMealCard({ cardTitle, price, description, nutrition, onClickButton2ndary }) {
   return (
     <div className="max-w-md w-full aspect-square bg-white border border-gray-200 rounded-xl relative">
-      {/* <div className="w-full aspect-[16_/_9] bg-red-100 bg-cover bg-center bg-no-repeat overflow-hidden rounded-t-xl" style={{
-        backgroundImage: `url(${HeroImg})`
-      }}>
-      </div> 
-      */}
       <div className="p-5">
         <h3 className="text-2xl font-semibold text-balance line-clamp-2">
           {cardTitle}
@@ -18,27 +13,27 @@ export default function OrderMealCard({ cardTitle, price, description, dietTypeT
           Rp. {price}
         </div>
 
-        <p className="border-b border-gray-300 py-3 mb-5 font-normal text-gray-700 line-clamp-2">{description}</p>
-        <div className="flex mb-5 gap-2 flex-wrap">
-          {dietTypeTime?.map((val) => {
+        <p className="font-normal text-gray-700 line-clamp-1">{description}</p>
+        <div className="pb-3 mb-5 border-b border-gray-300">
+
+        </div>
+        <div className="flex gap-1">
+        <div className="flex mb-5 gap-2 overflow-hidden w-[90%]">
+          {nutrition.map((element) => {
             return (
-              <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-                <div className="font-semibold text-primary-800 text-xs">
-                  {val}
+              <>
+                <div className="rounded-full bg-primary-200 px-3 py-1 w-fit min-w-[130px]">
+                  <div className="font-semibold text-primary-800 text-xs text-center">
+                    {element?.name} :  {element?.value} {element?.unit}
+                  </div>
                 </div>
-              </div>
+              </>
             )
           })}
-          <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-            <div className="font-semibold text-primary-800 text-xs">
-              protein: {nutrition?.protein?.value} {nutrition?.protein?.unit}
-            </div>
           </div>
-          <div className="rounded-full bg-primary-200 px-3 py-1 w-fit">
-            <div className="font-semibold text-primary-800 text-xs">
-              kalori:  {nutrition?.calorie?.value} {nutrition?.calorie?.unit}
+          <div className="flex mb-5 gap-2 overflow-hidden w-12">
+            ....
             </div>
-          </div>
         </div>
         <div className="flex gap-5 flex-wrap absolute bottom-5 left-5 right-5">
           <div className="min-w-[200px] flex-1">
