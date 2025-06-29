@@ -33,12 +33,13 @@ export default function LoginIndex() {
     } else {
       localStorage.setItem('userId', res.data.result.user_id)
       localStorage.setItem('token', res.data.result.token)
-      
+      console.log(res.data)
       dispatch(setUserInfo({
         user_id: res.data.result.user_id,
         name: res.data.result.name,
         email: res.data.result.email,
         address: res.data.result.address,
+        alergy: res.data.result.alergy,
       }))
       
       toast.success('Selamat Datang!');

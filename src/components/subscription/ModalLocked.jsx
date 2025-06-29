@@ -36,6 +36,7 @@ export default function ModalLocked() {
         name: res.data.result.name,
         email: res.data.result.email,
         address: res.data.result.address,
+        alergy: res.data.result.alergy,
       }))
 
       toast.success('Selamat Datang!')

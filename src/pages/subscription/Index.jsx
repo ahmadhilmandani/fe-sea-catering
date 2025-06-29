@@ -6,7 +6,7 @@ import MealPlanCard from "../../components/subscription/mealPlanCard";
 import MealDeliverySection from "./MealDeliverySection";
 import ModalLocked from "../../components/subscription/modalLocked";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { postTestimoni } from "../../api/postSubscription";
 import { setLoader } from "../../redux/slices/loaderSlice";
 import { toast } from "react-toastify";
@@ -15,7 +15,6 @@ import { useNavigate } from "react-router";
 
 
 const FILTER_OPT = {
-  all: 'semua',
   balanced: {
     id: 2,
     name: 'diet seimbang',
@@ -77,10 +76,14 @@ const DAY_OPT = [
 
 export default function SubscriptionIndex() {
   const [selectPlan, setSelectPlan] = useState()
+  const [planPrice, setPlanPrice] = useState()
   const [foodBreakfast, setFoodBreakfast] = useState()
   const [foodLunch, setFoodLunch] = useState()
   const [foodDinner, setFoodDinner] = useState()
   const [selectDay, setSelectDay] = useState([])
+  const [numMealType, setNumMealType] = useState()
+  const [numDayDeliver, setNumDayDeliver] = useState()
+  const [totalBill, setTotalBill] = useState()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -89,7 +92,7 @@ export default function SubscriptionIndex() {
   const authSlice = useSelector((state) => state.authSlice.userInfo)
 
   const handlePostSubs = async () => {
-    if (!selectPlan || !selectDay) {
+    if (!selectPlan || selectDay.length == 0) {
       return toast.error('Tolong Lengkapi Semuanya')
     }
     if (!foodBreakfast && !foodLunch && !foodDinner) {
@@ -102,7 +105,8 @@ export default function SubscriptionIndex() {
       "id_diet_type": selectPlan,
       "status_subs": "active",
       "food": [],
-      "delivery_days": selectDay
+      "delivery_days": selectDay,
+      "total_bill": totalBill,
     }
 
     if (foodBreakfast) {
@@ -135,6 +139,28 @@ export default function SubscriptionIndex() {
 
   }
 
+  useEffect(() => {
+    setNumDayDeliver(selectDay.length)
+
+    let temptMealTypeAmount = 0
+    if (foodBreakfast) {
+      temptMealTypeAmount = temptMealTypeAmount + 1
+    }
+    if (foodLunch) {
+      temptMealTypeAmount = temptMealTypeAmount + 1
+    }
+    if (foodDinner) {
+      temptMealTypeAmount = temptMealTypeAmount + 1
+    }
+
+    setNumMealType(temptMealTypeAmount)
+
+  }, [foodBreakfast, foodLunch, foodDinner, selectDay])
+
+  useEffect(() => {
+    setTotalBill(planPrice * numMealType * numDayDeliver)
+  }, [planPrice, numMealType, numDayDeliver])
+
   return (
     <>
       {
@@ -144,7 +170,7 @@ export default function SubscriptionIndex() {
       <div className="w-full min-h-screen px-12">
         <header className="mb-8">
           <h1 className="text-8xl text-primary-700 text-balance">
-            Subsribe
+            Subsrcibe
           </h1>
           <div className="text-gray-500">
             Pilih dan pesan paket diet sesuai kebutuhan nutrisi dan gaya hidup Anda, siap antar langsung ke rumah!
@@ -156,19 +182,19 @@ export default function SubscriptionIndex() {
             <div className="mb-8 flex gap-5 items-center ">
               <div className="min-w-[320px] flex-1">
                 <Input
-                  valueProp={"customerName"} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={() => { }}
+                  valueProp={authSlice.name} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={() => { }}
                 />
               </div>
               <div className="min-w-[320px] flex-1">
                 <Input
-                  valueProp={"customerOrigin"} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={() => { }}
+                  valueProp={authSlice.address} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={() => { }}
                 />
               </div>
             </div>
 
             <div className="mb-8">
               <Input
-                valueProp={"customerTesti"} labelProp={'Alergi'} placeholderProp={'cth: Saya Sangat Suka Dengan Makanan Tinggi Protein Di SEA Catering'} typeProp={'text'} inputId={'alergi'} onChangeProp={() => { }}
+                valueProp={authSlice.alergy} labelProp={'Alergi'} placeholderProp={'cth: Saya Sangat Suka Dengan Makanan Tinggi Protein Di SEA Catering'} typeProp={'text'} inputId={'alergi'} onChangeProp={() => { }}
               />
             </div>
 
@@ -177,7 +203,10 @@ export default function SubscriptionIndex() {
               <div className="block mb-2 font-semibold">Pilih Paket Layanan</div>
               <div className="mb-5 flex gap-3 justify-center items-center flex-wrap">
                 <MealPlanCard
-                  onClickProp={() => { setSelectPlan(2) }}
+                  onClickProp={() => {
+                    setSelectPlan(2)
+                    setPlanPrice(35000)
+                  }}
                   isActive={selectPlan == 2 ? true : false}
                   mealPlanType={FILTER_OPT.balanced.name}
                   price={FILTER_OPT.balanced.price}
@@ -185,7 +214,10 @@ export default function SubscriptionIndex() {
                   {FILTER_OPT.balanced.description}
                 </MealPlanCard>
                 <MealPlanCard
-                  onClickProp={() => { setSelectPlan(3) }}
+                  onClickProp={() => {
+                    setSelectPlan(3)
+                    setPlanPrice(30000)
+                  }}
                   isActive={selectPlan == 3 ? true : false}
                   mealPlanType={FILTER_OPT.lowCalorie.name}
                   price={FILTER_OPT.lowCalorie.price}
@@ -193,7 +225,10 @@ export default function SubscriptionIndex() {
                   {FILTER_OPT.lowCalorie.description}
                 </MealPlanCard>
                 <MealPlanCard
-                  onClickProp={() => { setSelectPlan(4) }}
+                  onClickProp={() => {
+                    setSelectPlan(4)
+                    setPlanPrice(40000)
+                  }}
                   isActive={selectPlan == 4 ? true : false}
                   mealPlanType={FILTER_OPT.highProtein.name}
                   price={FILTER_OPT.highProtein.price}
@@ -201,7 +236,10 @@ export default function SubscriptionIndex() {
                   {FILTER_OPT.highProtein.description}
                 </MealPlanCard>
                 <MealPlanCard
-                  onClickProp={() => { setSelectPlan(5) }}
+                  onClickProp={() => {
+                    setSelectPlan(5)
+                    setPlanPrice(60000)
+                  }}
                   isActive={selectPlan == 5 ? true : false}
                   mealPlanType={FILTER_OPT.royal.name}
                   price={FILTER_OPT.royal.price}
@@ -241,7 +279,52 @@ export default function SubscriptionIndex() {
             </div>
           </form>
           <div className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300 sticky top-32 right-0 max-w-[480px] min-w-[400px] flex-1">
-            <div className="block mb-2 font-semibold">Detail Harga</div>
+            <div className="block mb-8 text-gray-400 font-semibold py-2 px-2 border-b border-gray-300 ">Detail Harga</div>
+            <div className="flex flex-wrap mb-5">
+              <div className="font-semibold min-w-[64px] flex-1">
+                Paket
+              </div>
+              <div className="min-w-[64px] flex-1">
+                Rp.10000
+              </div>
+            </div>
+            <div className="flex flex-wrap mb-5">
+              <div className="font-semibold min-w-[64px] flex-1">
+                Jenis Waktu
+              </div>
+              <div className="min-w-[64px] flex-1">
+                {foodBreakfast ? 'Pagi  ' : null}
+                {foodLunch ? 'Siang  ' : null}
+                {foodDinner ? 'Malam  ' : null}
+                ({numMealType} Jenis)
+              </div>
+            </div>
+            <div className="flex flex-wrap mb-5">
+              <div className="font-semibold min-w-[64px] flex-1">
+                Hari
+              </div>
+              <div className="min-w-[64px] flex-1">
+                {selectDay.map((element) => {
+                  return element.id_delivery_day == 1 ? 'Senin  ' :
+                    element.id_delivery_day == 2 ? 'Selasa  ' :
+                      element.id_delivery_day == 3 ? 'Rabu  ' :
+                        element.id_delivery_day == 4 ? 'Kamis  ' :
+                          element.id_delivery_day == 5 ? 'Jumat  ' :
+                            element.id_delivery_day == 6 ? 'Sabtu  ' :
+                              element.id_delivery_day == 7 ? 'Minggu  ' :
+                                null;
+                })}
+                ({numDayDeliver} Jenis)
+              </div>
+            </div>
+            <div className="mb-5">
+              <div className="font-semibold min-w-[64px] flex-1">
+                Total
+              </div>
+              <div className="min-w-[64px] flex-1">
+                {planPrice ? planPrice : '-'} × {numMealType} × {numDayDeliver} × 4,3 = <strong>Rp. {totalBill ? totalBill : '00'}</strong>
+              </div>
+            </div>
 
             <div className="w-full mx-auto">
               <Button isExtend={true} buttonType="primary" onClickProp={handlePostSubs}>
