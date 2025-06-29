@@ -17,6 +17,7 @@ export default function HomeIndex() {
     const resp = await getTestimoni(5)
     setTestimonies(resp.data.result)
   }
+  
   useEffect(() => {
     handleGetTestimonies()
   }, [])
@@ -28,9 +29,11 @@ export default function HomeIndex() {
         <section className="pb-24">
           <div className="flex gap-20 justify-between mb-20">
             <div className="min-w-[320px] flex-1">
-              <div className="rounded-full bg-primary-200 p-2 flex items-center gap-3 w-fit">
-                <div className="w-4 aspect-square bg-primary-600 rounded-full">
-                </div>
+              <div className="rounded-full bg-primary-100 p-2 flex items-center gap-3 w-fit">
+                <span class="relative flex size-3">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-600 opacity-75"></span>
+                  <span class="relative inline-flex size-3 rounded-full bg-primary-700"></span>
+                </span>
                 <div className="font-semibold text-primary-800">
                   SEA CATERING
                 </div>

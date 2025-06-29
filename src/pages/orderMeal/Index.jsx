@@ -24,12 +24,12 @@ const FILTER_OPT = {
 
 export default function OrderMealIndex() {
   const [activeFilter, setActiveFilter] = useState('all')
-  const [detailMealIndex, setDetailMealIndex] = useState(null)
-  const [foodMenu, setFoodMenu] = useState()
+  const [detailMealIndex, setDetailMealIndex] = useState(0)
+  const [foodMenu, setFoodMenu] = useState([])
   const [name, setName] = useState()
   const [address, setAddress] = useState()
   const [phoneNumber, setPhoneNumber] = useState()
-  const [dayDeliver, setDayDeliver] = useState(1)
+  const [mealType, setMealType] = useState(1)
   const [timeDeliver, setTimeDeliver] = useState()
   const authSlice = useSelector((state) => state.authSlice.userInfo)
 
@@ -44,11 +44,12 @@ export default function OrderMealIndex() {
       "address": address,
       "phone_number": phoneNumber,
       "id_user": authSlice?.user_id,
-      "id_delivery_type": dayDeliver,
+      "id_meal_type": mealType,
       "id_food_menu": foodMenu[detailMealIndex]?.id_food_menu,
       "deliver_date_schedule": timeDeliver,
       "is_send": 0
     }
+    
     let resp
 
     if (!authSlice) {
@@ -144,29 +145,11 @@ export default function OrderMealIndex() {
               }
               <div className="flex flex-wrap gap-2 items-center px-8">
                 <div className="min-w-[200px] flex-1">
-                  <label className="block mb-2 font-semibold">{"Hari - Waktu"} <span className="text-red-500 inline-block ml-2">*</span></label>
-                  <select id="" className="py-2 px-3 border border-gray-300 bg-gray-50 rounded-lg w-full" onChange={(e) => { setDayDeliver(e.target.value) }}>
-                    <option value="1">senin - pagi</option>
-                    <option value="2">senin - siang</option>
-                    <option value="3">senin - malam</option>
-                    <option value="4">selasa - pagi</option>
-                    <option value="5">selasa - siang</option>
-                    <option value="6">selasa - malam</option>
-                    <option value="7">rabu - pagi</option>
-                    <option value="8">rabu - siang</option>
-                    <option value="9">rabu - malam</option>
-                    <option value="10">kamis - pagi</option>
-                    <option value="11">kamis - siang</option>
-                    <option value="12">kamis - malam</option>
-                    <option value="13">jumat - pagi</option>
-                    <option value="14">jumat - siang</option>
-                    <option value="15">jumat - malam</option>
-                    <option value="16">sabtu - pagi</option>
-                    <option value="17">sabtu - siang</option>
-                    <option value="18">sabtu - malam</option>
-                    <option value="19">minggu - pagi</option>
-                    <option value="20">minggu - siang</option>
-                    <option value="21">minggu - malam</option>
+                  <label className="block mb-2 font-semibold">{"Jenis Makanan"} <span className="text-red-500 inline-block ml-2">*</span></label>
+                  <select id="" className="py-2 px-3 border border-gray-300 bg-gray-50 rounded-lg w-full" onChange={(e) => { setMealType(e.target.value) }}>
+                    <option value="1">Sarapan</option>
+                    <option value="2">Makan Siang</option>
+                    <option value="2">Makan Malam</option>
                   </select>
                 </div>
                 <div className="min-w-[200px] flex-1">

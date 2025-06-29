@@ -12,8 +12,8 @@ export default function Modal({ modalTitle, children, confrimButtonTxt, confrimB
       <div onClick={(e) => {
         e.stopPropagation()
       }} className="relative p-4 w-full max-w-2xl max-h-full">
-        <div className="relative bg-white rounded-lg shadow-sm">
-          <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+        <div className="relative bg-white rounded-lg shadow-sm overflow-auto max-h-[90vh]">
+          <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 sticky top-0 left-0 right-0 bg-white z-30">
             <h3 className="text-xl font-semibold text-gray-900">
               {modalTitle}
             </h3>
@@ -28,7 +28,7 @@ export default function Modal({ modalTitle, children, confrimButtonTxt, confrimB
           <div className="p-4 md:p-5 space-y-4">
             {children}
           </div>
-          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b gap-2">
+          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b gap-2 sticky bottom-0 left-0 right-0 bg-white z-30">
             <div className="min-w-[200px] flex-1">
               <Button isExtend={true} buttonType="secondary" onClickProp={() => {
                 dispatch(setIsOpen(false))
