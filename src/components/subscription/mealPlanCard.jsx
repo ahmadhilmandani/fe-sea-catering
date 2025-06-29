@@ -1,9 +1,7 @@
-import Button from "../Button";
-
-export default function MealPlanCard({ mealPlanType, price, children, isActive }) {
+export default function MealPlanCard({ mealPlanType, price, children, isActive, onClickProp }) {
   return (
     <>
-      <div className={`${isActive ? 'bg-primary-100 border border-primary-700' : 'bg-gray-50 border border-gray-300' } w-full max-w-sm p-4  rounded-lg sm:p-8`}>
+      <div onClick={onClickProp} className={`${isActive ? 'bg-primary-100 border border-primary-800 shadow-xl' : 'bg-gray-50 border border-gray-300'} w-full max-w-sm p-4  rounded-lg sm:p-8 cursor-pointer hover:bg-gray-100 transition-all`}>
         <div className="flex gap-8 justify-between">
           <h5 className="font-semibold text-gray-600 capitalize">{mealPlanType}</h5>
           <div className="size-6 rounded-full p-1 bg-white border border-gray-300 flex justify-center items-center">
