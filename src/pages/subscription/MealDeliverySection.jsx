@@ -36,7 +36,7 @@ const FILTER_OPT = {
   }
 }
 
-export default function MealDeliverySection({ foodBreakfast, foodLunch, foodDinner, setFoodBreakfast, setFoodLunch, setFoodDinner }) {
+export default function MealDeliverySection({ foodBreakfast, foodLunch, foodDinner, setFoodBreakfast, setFoodLunch, setFoodDinner, selectPlan }) {
   const [foodMenu, setFoodMenu] = useState()
 
   const dispatch = useDispatch()
@@ -44,7 +44,7 @@ export default function MealDeliverySection({ foodBreakfast, foodLunch, foodDinn
   const handleGetFoodMenu = async () => {
     dispatch(setLoader(true))
 
-    const resp = await getFoodMenu()
+    const resp = await getFoodMenu(selectPlan)
 
     if (resp?.data?.is_error) {
       toast.error(resp.data.msg);
@@ -55,8 +55,10 @@ export default function MealDeliverySection({ foodBreakfast, foodLunch, foodDinn
   }
 
   useEffect(() => {
-    handleGetFoodMenu()
-  }, [])
+    if (selectPlan) {
+      handleGetFoodMenu()
+    }
+  }, [selectPlan])
 
 
   return (

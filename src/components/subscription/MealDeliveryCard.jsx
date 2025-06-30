@@ -24,6 +24,9 @@ export default function MealDeliveryCard({ selectedFood, deliveryTime, foodMenu,
             foodMenu?.map((element) => {
               return (
                 <div className={`${selectedFood?.id_meal_type == deliveryTime && selectedFood?.id_food_menu == element.id_food_menu ? 'bg-primary-50 border border-primary-800 shadow-xl' : 'bg-gray-50 border border-gray-200'} flex mb-3 p-3 rounded-xl min-w-[280px] max-w-[400px] flex-1`} onClick={() => {
+                  if (selectedFood && selectedFood.id_food_menu == element.id_food_menu) {
+                    return onClickProp({})
+                  }
                   onClickProp({
                     id_meal_type: deliveryTime,
                     id_food_menu: element.id_food_menu,

@@ -75,8 +75,8 @@ const DAY_OPT = [
 
 
 export default function SubscriptionIndex() {
-  const [selectPlan, setSelectPlan] = useState()
-  const [planPrice, setPlanPrice] = useState()
+  const [selectPlan, setSelectPlan] = useState(2)
+  const [planPrice, setPlanPrice] = useState(35000)
   const [foodBreakfast, setFoodBreakfast] = useState()
   const [foodLunch, setFoodLunch] = useState()
   const [foodDinner, setFoodDinner] = useState()
@@ -140,6 +140,16 @@ export default function SubscriptionIndex() {
   }
 
   useEffect(() => {
+    setFoodBreakfast(null)
+    setFoodLunch(null)
+    setFoodDinner(null)
+    setSelectDay([])
+    setNumMealType(null)
+    setNumDayDeliver(null)
+  }, [selectPlan])
+
+
+  useEffect(() => {
     setNumDayDeliver(selectDay.length)
 
     let temptMealTypeAmount = 0
@@ -170,10 +180,10 @@ export default function SubscriptionIndex() {
       <div className="w-full min-h-screen px-12">
         <header className="mb-8">
           <h1 className="text-8xl text-primary-700 text-balance">
-            Subsrcibe
+            Subscribe
           </h1>
           <div className="text-gray-500">
-            Pilih dan pesan paket diet sesuai kebutuhan nutrisi dan gaya hidup Anda, siap antar langsung ke rumah!
+            Pilih rencana diet mu dengan paket langganan yang kami sediakan dan nikmati makanan bergizi langsung ke rumah tanpa repot.
           </div>
         </header>
 
@@ -251,7 +261,7 @@ export default function SubscriptionIndex() {
 
             <div className="mb-8">
               <div className="block mb-2 font-semibold">Pilih Makanan & Jadwal Pengantaran</div>
-              <MealDeliverySection foodBreakfast={foodBreakfast} foodLunch={foodLunch} foodDinner={foodDinner} setFoodBreakfast={setFoodBreakfast} setFoodLunch={setFoodLunch} setFoodDinner={setFoodDinner} />
+              <MealDeliverySection foodBreakfast={foodBreakfast} foodLunch={foodLunch} foodDinner={foodDinner} setFoodBreakfast={setFoodBreakfast} setFoodLunch={setFoodLunch} setFoodDinner={setFoodDinner} selectPlan={selectPlan} />
             </div>
 
             <div className="mb-8">
@@ -285,7 +295,7 @@ export default function SubscriptionIndex() {
                 Paket
               </div>
               <div className="min-w-[64px] flex-1">
-                Rp.10000
+                Rp.{planPrice}
               </div>
             </div>
             <div className="flex flex-wrap mb-5">
