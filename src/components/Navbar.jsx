@@ -41,7 +41,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex gap-8 items-center">
-        <Link to={'/order-meal'} className={`${useMatch('/order-meal') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
+        <Link to={'/order-meal'} className={`${useMatch('/order-meal') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all text-nowrap`}>
           Order Meal
         </Link>
         <Link to={'/subscription'} className={`${useMatch('/subscription') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
