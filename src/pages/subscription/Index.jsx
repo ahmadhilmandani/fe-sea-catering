@@ -11,6 +11,8 @@ import { postTestimoni } from "../../api/postSubscription";
 import { setLoader } from "../../redux/slices/loaderSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { getSubscriptionByUserId } from "../../api/getSubscription";
+import ScreenLoading from "../../components/ScreenLoading";
 
 
 
@@ -89,7 +91,9 @@ export default function SubscriptionIndex() {
   const navigate = useNavigate()
 
 
+
   const authSlice = useSelector((state) => state.authSlice.userInfo)
+  const isLoading = useSelector((state) => state.loaderSlice.isLoading)
 
   const handlePostSubs = async () => {
     if (!selectPlan || selectDay.length == 0) {
@@ -139,6 +143,19 @@ export default function SubscriptionIndex() {
 
   }
 
+
+  useEffect(() => {
+    const getInitSubs = async () => {
+      dispatch(setLoader(true))
+
+      const res = await getSubscriptionByUserId(authSlice.user_id)
+      console.log(res)
+      dispatch(setLoader(false))
+    }
+
+    getInitSubs()
+  }, [])
+
   useEffect(() => {
     setFoodBreakfast(null)
     setFoodLunch(null)
@@ -173,6 +190,8 @@ export default function SubscriptionIndex() {
 
   return (
     <>
+      {isLoading && <ScreenLoading />}
+
       {
         !authSlice && <ModalLocked />
       }

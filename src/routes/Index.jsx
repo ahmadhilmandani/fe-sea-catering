@@ -5,6 +5,7 @@ import OrderMealIndex from "../pages/orderMeal/Index";
 import SubscriptionIndex from "../pages/subscription/Index";
 import LoginIndex from "../pages/login/Index";
 import RegisterIndex from "../pages/register/Index";
+import DashboardIndex from "../pages/dashboard/Index";
 
 
 export const router = createBrowserRouter([
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <RegisterIndex />
+      },
+      {
+        path: '/dashboard',
+        element: <DashboardIndex />
       },
     ]
   }

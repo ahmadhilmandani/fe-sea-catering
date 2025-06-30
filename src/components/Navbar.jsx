@@ -68,7 +68,7 @@ export default function Navbar() {
             {isDropdownOpen &&
               <div id="dropdown" className="z-10 bg-white border border-gray-300 rounded-lg shadow-sm w-full absolute top-14 right-0">
                 <ul className="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
-                  <li>
+                  <li onClick={()=>{setIsDropdownOpen(false)}}>
                     <Link to={'/dashboard'} className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100">
                       <IconDashboard />
                       Dashboard
