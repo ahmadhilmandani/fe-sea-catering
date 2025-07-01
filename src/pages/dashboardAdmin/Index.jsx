@@ -2,52 +2,43 @@ import { useDispatch, useSelector } from "react-redux"
 import Modal from "../../components/Modal"
 import { useEffect, useState } from "react"
 import { setLoader } from "../../redux/slices/loaderSlice"
-import { getSubscriptionByUserId } from "../../api/getSubscription"
 import ScreenLoading from "../../components/ScreenLoading"
 import Button from "../../components/Button"
-import { updateSubsciption } from "../../api/updateSubscription"
 import { toast } from "react-toastify"
 import { Link } from "react-router"
+import { IconCoinFilled, IconRosetteDiscountCheckFilled, IconSeedlingFilled, IconUserFilled } from "@tabler/icons-react"
+import { getAdminDashboardData } from "../../api/getAdminDashboardData"
+import dayjs from "dayjs"
 
 export default function DashboardAdminIndex() {
-  const [subscribeData, setSubscribeData] = useState()
+  const [startDate, setStartDate] = useState(dayjs().subtract(1, 'day').format('YYYY-MM-DD'))
+  const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
+  const [newSubs, setNewSubs] = useState()
+  const [totalReactivation, setTotalReactivation] = useState()
+  const [totalBill, setTotalBill] = useState()
+  const [totalSub, setTotalSub] = useState()
 
   const dispatch = useDispatch()
   const authSlice = useSelector((state) => state.authSlice.userInfo)
   const isLoading = useSelector((state) => state.loaderSlice.isLoading)
 
-  const handleUpdateStatus = async (status) => {
-    dispatch(setLoader(true))
-
-    const payload = {
-      id_diet_type: subscribeData.id_diet_type,
-      status_subs: status,
-    }
-
-    const res = await updateSubsciption(subscribeData.id, payload)
-    if (res?.data?.is_error) {
-      toast.error(res.data.msg);
-    } else {
-      const res = await getSubscriptionByUserId(authSlice.user_id)
-      setSubscribeData(res.data.result.subscription)
-
-      toast.success('Berhasil!')
-    }
-    dispatch(setLoader(false))
-
-  }
 
   useEffect(() => {
-    const getInitSubs = async () => {
+    const getData = async () => {
       dispatch(setLoader(true))
 
-      const res = await getSubscriptionByUserId(authSlice.user_id)
-      setSubscribeData(res.data.result.subscription)
-      dispatch(setLoader(false))
-    }
+      const res = await getAdminDashboardData(startDate, endDate)
+      setNewSubs(res.data.result[0].new_subs)
+      setTotalReactivation(res.data.result[0].total_reactivation)
+      setTotalBill(res.data.result[0].sum_total_bill)
+      setTotalSub(res.data.result[0].total_sub)
 
-    getInitSubs()
-  }, [dispatch, authSlice])
+      dispatch(setLoader(false))
+
+      console.log(res)
+    }
+    getData()
+  }, [])
 
   return (
     <>
@@ -68,132 +59,81 @@ export default function DashboardAdminIndex() {
         <div className="text-gray-500 mb-10">
           Pantau aktivitas, kelola langganan, dan temukan insight personal seputar pola makan sehatmu di satu tempat.
         </div>
-        <div className="flex gap-10">
+        <div>
           <div>
-            <div>
-              <div className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300">
-                <h3>Paket Layanan</h3>
-                <div className="flex gap-10">
-                  <div className="min-w-[320px] max-w-[400px] flex-1">
-                    <div className={`${subscribeData?.status == 'active' ? 'bg-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-500' : ''} rounded-xl`}>
-                      <div className="px-8 py-3 font-bold text-white capitalize">
-                        {subscribeData?.status}
-                      </div>
-                      <div className={`${subscribeData?.status == 'active' ? 'bg-primary-50 border border-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-50 border border-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-50 border border-red-500' : ''} shadow-xl w-full p-4 rounded-lg sm:p-8 cursor-pointer transition-all mb-10 py-8`}>
-                        <div className="mb-8">
-                          <h5 className="font-semibold capitalize">{subscribeData?.name}</h5>
-                          <div className={`${subscribeData?.status == 'active' ? 'text-primary-900' : subscribeData?.status == 'pending' ? 'text-yellow-900' : subscribeData?.status == 'canceled' ? 'text-red-900' : ''} text-[13.5px]  mt-[-8px]`}>
-                            (Rp. {subscribeData?.subs_diet_type_price_meal} / Makanan)
-                          </div>
-                        </div>
-                        <small className="text-gray-500">Total : </small>
-                        <div className={`${subscribeData?.status == 'active' ? 'text-primary-900' : subscribeData?.status == 'pending' ? 'text-yellow-700' : subscribeData?.status == 'canceled' ? 'text-red-700' : ''} flex items-baseline`}>
-                          <span className="text-3xl font-semibold">Rp. </span>
-                          <span className="text-5xl font-semibold tracking-tight">{subscribeData?.total_bill}</span>
-                        </div>
-                      </div>
+            <div className="flex gap-3 justify-center items-center mb-5 flex-wrap">
+              <div className="w-[100px]">
+                Cari Dari Tgl
+              </div>
+              <div className="min-w-[120px] max-w-[320px]">
+                <input
+                  value={startDate}
+                  type="date"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Select date"
+                  onChange={(e) => {
+                    setStartDate(e.target.value)
+                  }}
+                />
+              </div>
+              <div className="w-[60px]">
+                Sampai
+              </div>
+              <div className="min-w-[120px] max-w-[320px]">
+                <input
+                  value={endDate}
+                  type="date"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Select date"
+                  onChange={(e) => {
+                    setEndDate(e.target.value)
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-full max-w-7xl mx-auto px-5 py-8 rounded-lg bg-white border border-gray-300">
+              <div className="grid mb-8 md:mb-12 md:grid-cols-2">
+                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e">
+                  <div className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8">
+                    <div className="bg-primary-100 mb-8 mx-auto max-w-[120px] aspect-square w-full flex justify-center items-center rounded-full">
+                      <IconUserFilled className="fill-primary-800" size={32} />
                     </div>
-
-                    <div className="mb-5">
-                      <Link to={'/subscription?chooseAnotherPlan=true'}>
-                        <Button isExtend={true} buttonType="secondary">
-                          Pilih Paket Lain
-                        </Button>
-                      </Link>
-                    </div>
-                    {subscribeData?.status == 'active' ?
-
-                      <>
-                        <div className="mb-5">
-                          <Button isExtend={true} buttonType="warning" onClickProp={() => {
-                            handleUpdateStatus('pending')
-                          }}>
-                            Jeda Langganan
-                          </Button>
-                        </div>
-                        <div className="mb-5">
-                          <Button isExtend={true} buttonType="danger" onClickProp={() => {
-                            handleUpdateStatus('canceled')
-                          }}>
-                            Berhenti
-                          </Button>
-                        </div>
-                      </>
-                      :
-                      <>
-                        <div className="mb-5">
-                          <Button isExtend={true} buttonType="primary" onClickProp={() => {
-                            handleUpdateStatus('active')
-                          }}>
-                            Lanjutkan Langganan
-                          </Button>
-                        </div>
-                      </>
-                    }
+                    <h2 className="mb-2 font-semibold text-primary-700">{newSubs}</h2>
+                    <h3 className="text-lg font-medium text-gray-900">New Subscriptions</h3>
                   </div>
+                </figure>
 
-                  <div className="min-w-[320px] flex-1">
-                    <div className="flex gap-3 items-center flex-wrap mb-3">
-                      <strong>Hari Pengantaran</strong>
-                      {subscribeData?.delivery_day.map((val) => {
-                        return (
-                          <>
-                            <div className={`px-4 py-1.5 text-[13.5px] rounded-full border cursor-pointer capitalize bg-primary-50 border-primary-900 text-primary-900`}>
-                              {val}
-                            </div>
-                          </>
-                        )
-                      })}
+                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 md:rounded-se-lg">
+                  <div className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8">
+                    <div className="bg-primary-100 mb-8 mx-auto max-w-[120px] aspect-square w-full flex justify-center items-center rounded-full">
+                      <IconCoinFilled className="fill-primary-800" size={32} />
                     </div>
-                    <div className="relative overflow-x-auto border border-gray-200 rounded-xl">
-                      <table className="w-full text-sm text-left rtl:text-right">
-                        <thead className="text-xs text-primary-900 uppercase bg-primary-50 border-b border-gray-200">
-                          <tr>
-                            <th scope="col" className="px-6 py-3">
-                              Jenis
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              Makanan
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              Nutrisi
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {subscribeData?.details.map((el) => {
-                            return (
-                              <>
-                                <tr className="">
-                                  <td className="px-6 py-4 capitalize">
-                                    {el.food.meal_type.name}
-                                  </td>
-                                  <td className="px-6 py-4">
-                                    {el.food.name}
-                                  </td>
-                                  <td className="px-6 py-4">
-                                    <div className="flex gap-2 items-center flex-wrap">
-
-                                      {el.food.nutritions.map((ele) => {
-                                        return (
-                                          <>
-                                            <small className="px-4 py-1.5 bg-primary-50 capitalize font-semibold border border-primary-700 text-primary-700 rounded-full text-xs">
-                                              {ele.name}: {ele.val} {ele.unit}
-                                            </small>
-                                          </>
-                                        )
-                                      })}
-                                    </div>
-                                  </td>
-                                </tr>
-                              </>
-                            )
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
+                    <h2 className="mb-2 font-semibold text-primary-700">Rp. {totalBill}</h2>
+                    <h3 className="text-lg font-medium text-gray-900">Monthly Recurring Revenue (MRR)</h3>
                   </div>
-                </div>
+                </figure>
+
+                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 md:rounded-es-lg md:border-b-0 md:border-e">
+                  <div className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8">
+                    <div className="bg-primary-100 mb-8 mx-auto max-w-[120px] aspect-square w-full flex justify-center items-center rounded-full">
+                      <IconRosetteDiscountCheckFilled className="fill-primary-800" size={32} />
+
+                    </div>
+                    <h2 className="mb-2 font-semibold text-primary-700">{totalReactivation}</h2>
+                    <h3 className="text-lg font-medium text-gray-900">Reactivations</h3>
+                  </div>
+                </figure>
+
+                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-gray-200 rounded-b-lg md:rounded-se-lg">
+                  <div className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8">
+                    <div className="bg-primary-100 mb-8 mx-auto max-w-[120px] aspect-square w-full flex justify-center items-center rounded-full">
+                      <IconSeedlingFilled className="fill-primary-800" size={32} />
+
+                    </div>
+                    <h2 className="mb-2 font-semibold text-primary-700">{totalSub}</h2>
+                    <h3 className="text-lg font-medium text-gray-900">Subscription Growth</h3>
+                  </div>
+                </figure>
               </div>
             </div>
           </div>
