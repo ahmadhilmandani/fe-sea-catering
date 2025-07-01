@@ -28,7 +28,7 @@ export default function Modal({ modalTitle, children, confrimButtonTxt, confrimB
           <div className="p-4 md:p-5 space-y-4">
             {children}
           </div>
-          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b gap-2 sticky bottom-0 left-0 right-0 bg-white z-30">
+          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b gap-6 sticky bottom-0 left-0 right-0 bg-white z-30 flex-wrap">
             <div className="min-w-[200px] flex-1">
               <Button isExtend={true} buttonType="secondary" onClickProp={() => {
                 dispatch(setIsOpen(false))

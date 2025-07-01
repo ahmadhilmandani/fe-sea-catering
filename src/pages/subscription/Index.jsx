@@ -213,7 +213,7 @@ export default function SubscriptionIndex() {
 
       <div className="w-full min-h-screen px-12">
         <header className="mb-8">
-          <h1 className="text-8xl text-primary-700 text-balance">
+          <h1 className="text-6xl xl:text-8xl text-primary-700 text-balance">
             Subscribe
           </h1>
           <div className="text-gray-500">
@@ -222,7 +222,7 @@ export default function SubscriptionIndex() {
         </header>
         {isSubsAlready.id && !isChooseAnotherPlan ?
           <>
-            <div className="w-full py-16 flex justify-center items-center">
+            <div className="w-full py-16 flex justify-center items-center flex-wrap">
               <div className="min-w-[329px] max-w-[640px] w-full">
                 <div class="w-full bg-white border border-gray-200 rounded-xl shadow-sm py-12 px-8">
                   <div class="flex flex-col pb-10">
@@ -260,15 +260,15 @@ export default function SubscriptionIndex() {
           </>
           :
           <>
-            <div className="flex gap-10 justify-start items-start">
+            <div className="flex gap-10 justify-start items-start flex-wrap">
               <form className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300">
-                <div className="mb-8 flex gap-5 items-center ">
-                  <div className="min-w-[320px] flex-1">
+                <div className="mb-8 flex gap-5 items-center flex-wrap">
+                  <div className="min-w-[280px] flex-1">
                     <Input
                       valueProp={authSlice.name} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={() => { }}
                     />
                   </div>
-                  <div className="min-w-[320px] flex-1">
+                  <div className="min-w-[280px] flex-1">
                     <Input
                       valueProp={authSlice.address} labelProp={'Asal'} placeholderProp={'cth: Sumeep'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={() => { }}
                     />
@@ -361,7 +361,7 @@ export default function SubscriptionIndex() {
                   </div>
                 </div>
               </form>
-              <div className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300 sticky top-32 right-0 max-w-[480px] min-w-[400px] flex-1">
+              <div className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300 fixed bottom-0 left-0 right-0 xl:sticky xl:top-32 xl:right-0 max-w-[480px] min-w-[280px] flex-1 z-[1000]">
                 <div className="block mb-8 text-gray-400 font-semibold py-2 px-2 border-b border-gray-300 ">Detail Harga</div>
                 <div className="flex flex-wrap mb-5">
                   <div className="font-semibold min-w-[64px] flex-1">
