@@ -17,12 +17,13 @@ export default function DashboardIndex() {
   const authSlice = useSelector((state) => state.authSlice.userInfo)
   const isLoading = useSelector((state) => state.loaderSlice.isLoading)
 
-  const handleUpdateStatus = async (status) => {
+  const handleUpdateStatus = async (status, isReactivation) => {
     dispatch(setLoader(true))
 
     const payload = {
       id_diet_type: subscribeData.id_diet_type,
       status_subs: status,
+      is_reactivation: isReactivation
     }
 
     const res = await updateSubsciption(subscribeData.id, payload)
@@ -43,7 +44,7 @@ export default function DashboardIndex() {
       dispatch(setLoader(true))
 
       const res = await getSubscriptionByUserId(authSlice.user_id)
-      setSubscribeData(res.data.result.subscription)
+      setSubscribeData(res.data.result?.subscription || null)
       dispatch(setLoader(false))
     }
 
@@ -71,10 +72,12 @@ export default function DashboardIndex() {
         </div>
         <div className="flex gap-10">
           <UserInfoSection />
-          <div>
-            <div>
-              <div className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300">
-                <h3>Paket Layanan</h3>
+ 
+              <div className="min-w-[320px] flex-1 px-5 py-8 rounded-lg bg-white border border-gray-300">
+
+              {subscribeData ? 
+                <>
+                                <h3>Paket Layanan</h3>
                 <div className="flex gap-10">
                   <div className="min-w-[320px] max-w-[400px] flex-1">
                     <div className={`${subscribeData?.status == 'active' ? 'bg-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-500' : ''} rounded-xl`}>
@@ -108,14 +111,14 @@ export default function DashboardIndex() {
                       <>
                         <div className="mb-5">
                           <Button isExtend={true} buttonType="warning" onClickProp={() => {
-                            handleUpdateStatus('pending')
+                            handleUpdateStatus('pending', null)
                           }}>
                             Jeda Langganan
                           </Button>
                         </div>
                         <div className="mb-5">
                           <Button isExtend={true} buttonType="danger" onClickProp={() => {
-                            handleUpdateStatus('canceled')
+                            handleUpdateStatus('canceled', null)
                           }}>
                             Berhenti
                           </Button>
@@ -125,7 +128,7 @@ export default function DashboardIndex() {
                       <>
                         <div className="mb-5">
                           <Button isExtend={true} buttonType="primary" onClickProp={() => {
-                            handleUpdateStatus('active')
+                            handleUpdateStatus('active', true)
                           }}>
                             Lanjutkan Langganan
                           </Button>
@@ -196,8 +199,18 @@ export default function DashboardIndex() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+                </>
+                  :
+              <div className="flex justify-center items-center flex-col gap-5 w-full h-full">
+                Anda Belum Berlangganan
+                <Link to={'/subscription'}>
+                  <Button buttonType="primary">
+                  Pilih Langganan
+                  </Button>
+                </Link>
+                  </div>
+              }
+
           </div>
         </div>
       </main>

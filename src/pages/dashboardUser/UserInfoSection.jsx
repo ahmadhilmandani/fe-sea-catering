@@ -15,7 +15,7 @@ export default function UserInfoSection() {
       <section>
         <div className="min-w-[329px] flex-1 rounded-lg ">
           <div>
-            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm py-12 px-8">
+            <div class="w-full max-w-sm bg-white border border-gray-300 rounded-lg py-12 px-8">
               <div class="flex flex-col pb-10">
                 <div className="flex flex-col items-center">
                   <div class="relative w-24 h-24 overflow-hidden bg-gray-100 rounded-full mb-8">
