@@ -23,7 +23,7 @@ const FILTER_OPT = {
 
 
 export default function OrderMealIndex() {
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeFilter, setActiveFilter] = useState(0)
   const [detailMealIndex, setDetailMealIndex] = useState(0)
   const [foodMenu, setFoodMenu] = useState([])
   const [name, setName] = useState()
@@ -69,8 +69,14 @@ export default function OrderMealIndex() {
 
   const handleGetFoodMenu = async () => {
     dispatch(setLoader(true))
+    
+    let resp
+    if (activeFilter == 0) {     
+      resp = await getFoodMenu()
+    } else {
+      resp = await getFoodMenu(activeFilter)
 
-    const resp = await getFoodMenu()
+    }
 
     if (resp?.data?.is_error) {
       toast.error(resp.data.msg);
@@ -82,7 +88,7 @@ export default function OrderMealIndex() {
 
   useEffect(() => {
     handleGetFoodMenu()
-  }, [])
+  }, [activeFilter])
 
   const isLoading = useSelector((state) => state.loaderSlice.isLoading)
 
@@ -163,7 +169,7 @@ export default function OrderMealIndex() {
 
       <div className="px-12">
         <header className="mb-8">
-          <h1 className="text-8xl text-primary-700 text-balance">
+          <h1 className="text-6xl xl:text-8xl text-primary-700 text-balance">
             Pemesanan Diet
           </h1>
           <div className="text-gray-500">
@@ -174,19 +180,19 @@ export default function OrderMealIndex() {
           <div className="font-medium text-center text-gray-500 border-b border-gray-200 mb-12">
             <ul className="flex flex-wrap gap-2">
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.all) }} className={`${activeFilter == FILTER_OPT.all ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.all}</div>
+                <div onClick={() => { setActiveFilter(0) }} className={`${activeFilter == 0 ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.all}</div>
               </li>
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.balanced) }} className={`${activeFilter == FILTER_OPT.balanced ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.balanced}</div>
+                <div onClick={() => { setActiveFilter(2) }} className={`${activeFilter == 2 ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.balanced}</div>
               </li>
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.lowCalorie) }} className={`${activeFilter == FILTER_OPT.lowCalorie ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.lowCalorie}</div>
+                <div onClick={() => { setActiveFilter(3) }} className={`${activeFilter == 3 ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.lowCalorie}</div>
               </li>
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.highProtein) }} className={`${activeFilter == FILTER_OPT.highProtein ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.highProtein}</div>
+                <div onClick={() => { setActiveFilter(4) }} className={`${activeFilter == 4 ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.highProtein}</div>
               </li>
               <li>
-                <div onClick={() => { setActiveFilter(FILTER_OPT.royal) }} className={`${activeFilter == FILTER_OPT.royal ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.royal}</div>
+                <div onClick={() => { setActiveFilter(5) }} className={`${activeFilter == 5 ? 'font-semibold border-b-2 border-primary-700 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 cursor-pointer'} capitalize inline-block p-4 rounded-t-lg`}>{FILTER_OPT.royal}</div>
               </li>
             </ul>
           </div>
