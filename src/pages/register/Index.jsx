@@ -22,6 +22,18 @@ export default function RegisterIndex() {
   const navigate = useNavigate()
 
   const submitRegister = async () => {
+
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!regexEmail.test(email)) {
+      return toast.error("Format Email Tidak Benar");
+    }
+    
+    if (!regexPassword.test(password)) {
+      return toast.error("Password Harus Mengandung Min. 8 karakter, Huruf Besar, Huruf Kecil, dan Karakter Tanda Baca");
+    }
+    
+
     if (!name || !email || !password || !confirmPassword || !address || !alergies) {
       return toast.error("Tolong Isi Semua Kolom");
     }
@@ -86,12 +98,12 @@ export default function RegisterIndex() {
             </div>
             <div className="mb-8">
               <Input
-                isRequired={true} valueProp={password} labelProp={'Password'} placeholderProp={'cth: Password123!'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setPassword}
+                isRequired={true} valueProp={password} labelProp={'Password'} placeholderProp={'cth: Password123!'} typeProp={'password'} inputId={'customer-origin'} onChangeProp={setPassword}
               />
             </div>
             <div className="mb-8">
               <Input
-                isRequired={true} valueProp={confirmPassword} labelProp={'Konfirmasi Password'} placeholderProp={'cth: Password123!'} typeProp={'text'} inputId={'customer-origin'} onChangeProp={setConfirmPassword}
+                isRequired={true} valueProp={confirmPassword} labelProp={'Konfirmasi Password'} placeholderProp={'cth: Password123!'} typeProp={'password'} inputId={'customer-origin'} onChangeProp={setConfirmPassword}
               />
             </div>
             <div className="mb-12 flex gap-2 items-center text-gray-500">

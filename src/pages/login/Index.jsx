@@ -17,6 +17,11 @@ export default function LoginIndex() {
   const dispatch = useDispatch()
 
   const loginHandle = async () => {
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regexEmail.test(email)) {
+      return toast.error("Format Email Tidak Benar");
+    }
+    
     if (!email || !password) {
       return toast.error("Tolong Isi Semua Kolom");
     }
@@ -63,7 +68,7 @@ export default function LoginIndex() {
           <h3 className="mx-auto text-center mb-8">Login</h3>
           <div className="mb-8">
             <Input
-              isRequired={true} valueProp={email} labelProp={'Nama'} placeholderProp={'cth: Budi Andi'} typeProp={'text'} inputId={'customer-name'} onChangeProp={setEmail}
+              isRequired={true} valueProp={email} labelProp={'Email'} placeholderProp={'cth: Budi@Andi.com'} typeProp={'email'} inputId={'customer-name'} onChangeProp={setEmail}
             />
           </div>
           <div className="mb-8">
