@@ -260,8 +260,8 @@ export default function SubscriptionIndex() {
           </>
           :
           <>
-            <div className="flex gap-10 justify-start items-start flex-wrap">
-              <form className="w-full px-5 py-8 rounded-lg bg-white border border-gray-300">
+            <div className="flex gap-10 justify-start items-start flex-wrap xl:flex-nowrap">
+              <form className="flex-1 min-w-[280px] px-5 py-8 rounded-lg bg-white border border-gray-300">
                 <div className="mb-8 flex gap-5 items-center flex-wrap">
                   <div className="min-w-[280px] flex-1">
                     <Input
