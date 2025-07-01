@@ -2,13 +2,15 @@ import { Link, useMatch } from "react-router"
 import LogoSEA from "../assets/logo/logo-sea-catering.png"
 import Button from "./Button"
 import { useState } from "react"
-import { IconChevronDown, IconChevronUp, IconDashboard, IconLogout2, IconUserFilled } from "@tabler/icons-react"
-import { useSelector } from "react-redux"
+import { IconChevronDown, IconChevronUp, IconDashboard, IconLogout2, IconMenu, IconUserFilled } from "@tabler/icons-react"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleSidebar } from "../redux/slices/openSidebarSlice"
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const isOnLoginPage = useMatch('/login')
   const authSlice = useSelector((state) => state.authSlice.userInfo)
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
     localStorage.removeItem('userId')
@@ -26,21 +28,25 @@ export default function Navbar() {
             <div className="font-bold">CATERING</div>
           </div>
         </div>
-        <Link to={'/'} className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
+        <Link to={'/'} className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all hidden xl:block`}>
           Home
         </Link>
-        <a href="#service">
+        <a href="#service" className="hidden xl:block">
           Lovely Services
         </a>
-        <a href="#testimoni">
+        <a href="#testimoni" className="hidden xl:block">
           Testimoni
         </a>
-        <a href="#howto">
+        <a href="#howto" className="hidden xl:block">
           How to?
         </a>
       </div>
 
-      <div className="flex gap-8 items-center">
+      <div className="xl:hidden block">
+        <IconMenu onClick={()=>{dispatch(toggleSidebar())}} />
+      </div>
+
+      <div className="xl:flex gap-8 items-center hidden">
         <Link to={'/order-meal'} className={`${useMatch('/order-meal') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all text-nowrap`}>
           Order Meal
         </Link>
@@ -68,7 +74,7 @@ export default function Navbar() {
             {isDropdownOpen &&
               <div id="dropdown" className="z-10 bg-white border border-gray-300 rounded-lg shadow-sm w-full absolute top-14 right-0">
                 <ul className="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
-                  <li onClick={()=>{setIsDropdownOpen(false)}}>
+                  <li onClick={() => { setIsDropdownOpen(false) }}>
                     <Link to={authSlice.is_admin ? '/admin-dashboard' : '/dashboard'} className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100">
                       <IconDashboard />
                       Dashboard

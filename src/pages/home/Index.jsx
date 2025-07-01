@@ -27,7 +27,7 @@ export default function HomeIndex() {
     <div className="relative">
       <main className="px-12">
         <section className="pb-24">
-          <div className="flex gap-20 justify-between mb-20">
+          <div className="flex gap-4 xl:gap-20 justify-between mb-20 flex-wrap">
             <div className="min-w-[320px] flex-1">
               <div className="rounded-full bg-primary-100 p-2 flex items-center gap-3 w-fit">
                 <span class="relative flex size-3">
@@ -38,7 +38,7 @@ export default function HomeIndex() {
                   SEA CATERING
                 </div>
               </div>
-              <h1 className="text-8xl text-primary-700 text-balance">
+              <h1 className="text-6xl xl:text-8xl text-primary-700 text-balance">
                 Healthy Meals, Anytime, Anywhere.
               </h1>
             </div>
@@ -52,8 +52,8 @@ export default function HomeIndex() {
               </a>
             </div>
           </div>
-          <div className="flex gap-20 justify-between items- mb-20">
-            <div className="min-w-[320px] flex-1 aspect-[16_/_8] bg-gray-200 bg-cover bg-center bg-no-repeat overflow-hidden rounded-xl" style={{
+          <div className="flex gap-20 justify-between mb-20 flex-wrap">
+            <div className="min-w-[320px] hidden xl:block flex-1 aspect-[16_/_8] bg-gray-200 bg-cover bg-center bg-no-repeat overflow-hidden rounded-xl" style={{
               backgroundImage: `url(${HeroImg})`
             }}>
             </div>
@@ -75,8 +75,8 @@ export default function HomeIndex() {
           </div>
         </section>
         <section id="service" className="py-36">
-          <div className="flex gap-32 justify-center items-center">
-            <div className="max-w-[480px] flex-1">
+          <div className="flex gap-12 xl:gap-32 justify-center items-center flex-wrap">
+            <div className="min-w-[320px] max-w-[480px] flex-1">
               <IconSalad size={56} stroke={1.3} className="mb-5 text-primary-600" />
               <h2 className="text-primary-700 font-semibold">
                 Lovely Services
@@ -89,7 +89,7 @@ export default function HomeIndex() {
                 I want you to have a healthy life, that's why we have this services !
               </div>
             </div>
-            <div className="max-w-[560px] flex-1">
+            <div className="min-w-[320px] max-w-[560px] flex-1">
               <div className="pb-3 mb-5 border-b border-gray-200">
                 <h3 className="text-primary-700 font-semibold">
                   01.
@@ -213,7 +213,7 @@ export default function HomeIndex() {
           }
         </section>
         <section className="py-24 min-h-screen">
-          <div className="flex gap-20 justify-center items-center">
+          <div className="flex gap-12 xl:gap-20 justify-center items-center flex-wrap">
             <div className="min-w-[320px] flex-1 max-w-[40%]">
               <h2 className="text-balance">Yuk, Izinkan Kami Ngebantu Kamu Buat Hidup Sehat!</h2>
               <p className="text-gray-600 mb-12">
