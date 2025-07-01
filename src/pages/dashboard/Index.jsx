@@ -8,6 +8,7 @@ import Button from "../../components/Button"
 import UserInfoSection from "./userInfoSection"
 import { updateSubsciption } from "../../api/updateSubscription"
 import { toast } from "react-toastify"
+import { Link } from "react-router"
 
 export default function DashboardIndex() {
   const [subscribeData, setSubscribeData] = useState()
@@ -96,9 +97,11 @@ export default function DashboardIndex() {
                     </div>
 
                     <div className="mb-5">
-                      <Button isExtend={true} buttonType="secondary">
-                        Pilih Paket Lain
-                      </Button>
+                      <Link to={'/subscription?chooseAnotherPlan=true'}>
+                        <Button isExtend={true} buttonType="secondary">
+                          Pilih Paket Lain
+                        </Button>
+                      </Link>
                     </div>
                     {subscribeData?.status == 'active' ?
 

@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import { postSubsciption } from "../../api/postSubscription";
 import { setLoader } from "../../redux/slices/loaderSlice";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { getSubscriptionByUserId } from "../../api/getSubscription";
 import ScreenLoading from "../../components/ScreenLoading";
+import { softDeleteSubscription } from "../../api/softDeleteSubscription";
 
 
 
@@ -77,6 +78,9 @@ const DAY_OPT = [
 
 
 export default function SubscriptionIndex() {
+  const [searchParams] = useSearchParams()
+  const isChooseAnotherPlan = searchParams.get('chooseAnotherPlan')
+  console.log(isChooseAnotherPlan)
 
   const [isSubsAlready, setIsSubsAlready] = useState({ status: false, name: '' })
   const [selectPlan, setSelectPlan] = useState(2)
@@ -105,6 +109,9 @@ export default function SubscriptionIndex() {
       return toast.error('Tolong Pilih Minimal Satu Makanan baik untuk sarapan, makan siang, ataupun makan malam')
     }
 
+    if (isChooseAnotherPlan) {
+      await softDeleteSubscription(isSubsAlready.id)
+    }
 
     dispatch(setLoader(true))
 
@@ -213,7 +220,7 @@ export default function SubscriptionIndex() {
             Pilih rencana diet mu dengan paket langganan yang kami sediakan dan nikmati makanan bergizi langsung ke rumah tanpa repot.
           </div>
         </header>
-        {isSubsAlready.id ?
+        {isSubsAlready.id && !isChooseAnotherPlan ?
           <>
             <div className="w-full py-16 flex justify-center items-center">
               <div className="min-w-[329px] max-w-[640px] w-full">
