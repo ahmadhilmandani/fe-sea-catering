@@ -70,16 +70,14 @@ export default function DashboardIndex() {
         <div className="text-gray-500 mb-10">
           Pantau aktivitas, kelola langganan, dan temukan insight personal seputar pola makan sehatmu di satu tempat.
         </div>
-        <div className="flex gap-10">
+        <div className="flex gap-10 flex-wrap">
           <UserInfoSection />
- 
-              <div className="min-w-[320px] flex-1 px-5 py-8 rounded-lg bg-white border border-gray-300">
-
-              {subscribeData ? 
-                <>
-                                <h3>Paket Layanan</h3>
-                <div className="flex gap-10">
-                  <div className="min-w-[320px] max-w-[400px] flex-1">
+          <div className="min-w-[320px] flex-1 px-5 py-8 rounded-lg bg-white border border-gray-300">
+            {subscribeData ?
+              <>
+                <h3>Paket Layanan</h3>
+                <div className="flex gap-10 flex-wrap">
+                  <div className="min-w-[280px] max-w-[400px] flex-1">
                     <div className={`${subscribeData?.status == 'active' ? 'bg-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-500' : ''} rounded-xl`}>
                       <div className="px-8 py-3 font-bold text-white capitalize">
                         {subscribeData?.status}
@@ -137,7 +135,7 @@ export default function DashboardIndex() {
                     }
                   </div>
 
-                  <div className="min-w-[320px] flex-1">
+                  <div className="min-w-[280px] flex-1">
                     <div className="flex gap-3 items-center flex-wrap mb-3">
                       <strong>Hari Pengantaran</strong>
                       {subscribeData?.delivery_day.map((val) => {
@@ -199,17 +197,17 @@ export default function DashboardIndex() {
                     </div>
                   </div>
                 </div>
-                </>
-                  :
+              </>
+              :
               <div className="flex justify-center items-center flex-col gap-5 w-full h-full">
                 Anda Belum Berlangganan
                 <Link to={'/subscription'}>
                   <Button buttonType="primary">
-                  Pilih Langganan
+                    Pilih Langganan
                   </Button>
                 </Link>
-                  </div>
-              }
+              </div>
+            }
 
           </div>
         </div>
