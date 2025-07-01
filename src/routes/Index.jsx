@@ -5,7 +5,8 @@ import OrderMealIndex from "../pages/orderMeal/Index";
 import SubscriptionIndex from "../pages/subscription/Index";
 import LoginIndex from "../pages/login/Index";
 import RegisterIndex from "../pages/register/Index";
-import DashboardIndex from "../pages/dashboard/Index";
+import DashboardIndex from "../pages/dashboardUser/Index";
+import DashboardAdminIndex from "../pages/dashboardAdmin/Index";
 
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardIndex />
+      },
+      {
+        path: '/admin-dashboard',
+        element: <DashboardAdminIndex />
       },
     ]
   }
