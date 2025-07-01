@@ -6,6 +6,8 @@ import { getSubscriptionByUserId } from "../../api/getSubscription"
 import ScreenLoading from "../../components/ScreenLoading"
 import Button from "../../components/Button"
 import UserInfoSection from "./userInfoSection"
+import { updateSubsciption } from "../../api/updateSubscription"
+import { toast } from "react-toastify"
 
 export default function DashboardIndex() {
   const [subscribeData, setSubscribeData] = useState()
@@ -13,6 +15,27 @@ export default function DashboardIndex() {
   const dispatch = useDispatch()
   const authSlice = useSelector((state) => state.authSlice.userInfo)
   const isLoading = useSelector((state) => state.loaderSlice.isLoading)
+
+  const handleUpdateStatus = async (status) => {
+    dispatch(setLoader(true))
+
+    const payload = {
+      id_diet_type: subscribeData.id_diet_type,
+      status_subs: status,
+    }
+
+    const res = await updateSubsciption(subscribeData.id, payload)
+    if (res?.data?.is_error) {
+      toast.error(res.data.msg);
+    } else {
+      const res = await getSubscriptionByUserId(authSlice.user_id)
+      setSubscribeData(res.data.result.subscription)
+
+      toast.success('Berhasil!')
+    }
+    dispatch(setLoader(false))
+
+  }
 
   useEffect(() => {
     const getInitSubs = async () => {
@@ -24,7 +47,7 @@ export default function DashboardIndex() {
     }
 
     getInitSubs()
-  }, [])
+  }, [dispatch, authSlice])
 
   return (
     <>
@@ -53,25 +76,59 @@ export default function DashboardIndex() {
                 <h3>Paket Layanan</h3>
                 <div className="flex gap-10">
                   <div className="min-w-[320px] max-w-[400px] flex-1">
-                    <div className={`bg-primary-100 border border-primary-800 shadow-xl w-full p-4 rounded-lg sm:p-8 cursor-pointer transition-all mb-10`}>
-                      <div className="mb-8">
-                        <h5 className="font-semibold capitalize">{subscribeData?.name}</h5>
-                        <div className="text-[13.5px] text-primary-900 mt-[-8px]">
-                          (Rp. {subscribeData?.subs_diet_type_price_meal} / Makanan)
-                        </div>
+                    <div className={`${subscribeData?.status == 'active' ? 'bg-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-500' : ''} rounded-xl`}>
+                      <div className="px-8 py-3 font-bold text-white capitalize">
+                        {subscribeData?.status}
                       </div>
-                      <small className="text-gray-500">Total : </small>
-                      <div className={`flex items-baseline text-primary-900`}>
-                        <span className="text-3xl font-semibold">Rp. </span>
-                        <span className="text-5xl font-semibold tracking-tight">{subscribeData?.total_bill}</span>
+                      <div className={`${subscribeData?.status == 'active' ? 'bg-primary-50 border border-primary-700' : subscribeData?.status == 'pending' ? 'bg-yellow-50 border border-yellow-500' : subscribeData?.status == 'canceled' ? 'bg-red-50 border border-red-500' : ''} shadow-xl w-full p-4 rounded-lg sm:p-8 cursor-pointer transition-all mb-10 py-8`}>
+                        <div className="mb-8">
+                          <h5 className="font-semibold capitalize">{subscribeData?.name}</h5>
+                          <div className={`${subscribeData?.status == 'active' ? 'text-primary-900' : subscribeData?.status == 'pending' ? 'text-yellow-900' : subscribeData?.status == 'canceled' ? 'text-red-900' : ''} text-[13.5px]  mt-[-8px]`}>
+                            (Rp. {subscribeData?.subs_diet_type_price_meal} / Makanan)
+                          </div>
+                        </div>
+                        <small className="text-gray-500">Total : </small>
+                        <div className={`${subscribeData?.status == 'active' ? 'text-primary-900' : subscribeData?.status == 'pending' ? 'text-yellow-700' : subscribeData?.status == 'canceled' ? 'text-red-700' : ''} flex items-baseline`}>
+                          <span className="text-3xl font-semibold">Rp. </span>
+                          <span className="text-5xl font-semibold tracking-tight">{subscribeData?.total_bill}</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div>
+                    <div className="mb-5">
                       <Button isExtend={true} buttonType="secondary">
                         Pilih Paket Lain
                       </Button>
                     </div>
+                    {subscribeData?.status == 'active' ?
+
+                      <>
+                        <div className="mb-5">
+                          <Button isExtend={true} buttonType="warning" onClickProp={() => {
+                            handleUpdateStatus('pending')
+                          }}>
+                            Jeda Langganan
+                          </Button>
+                        </div>
+                        <div className="mb-5">
+                          <Button isExtend={true} buttonType="danger" onClickProp={() => {
+                            handleUpdateStatus('canceled')
+                          }}>
+                            Berhenti
+                          </Button>
+                        </div>
+                      </>
+                      :
+                      <>
+                        <div className="mb-5">
+                          <Button isExtend={true} buttonType="primary" onClickProp={() => {
+                            handleUpdateStatus('active')
+                          }}>
+                            Lanjutkan Langganan
+                          </Button>
+                        </div>
+                      </>
+                    }
                   </div>
 
                   <div className="min-w-[320px] flex-1">

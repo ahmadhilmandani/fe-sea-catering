@@ -1,4 +1,4 @@
-import { IconCheck, IconSunFilled } from "@tabler/icons-react";
+import { IconCancel, IconCheck, IconPennant2Filled, IconSunFilled } from "@tabler/icons-react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import OrderMealCard from "../../components/orderMeal/orderMealCard";
@@ -77,6 +77,7 @@ const DAY_OPT = [
 
 
 export default function SubscriptionIndex() {
+
   const [isSubsAlready, setIsSubsAlready] = useState({ status: false, name: '' })
   const [selectPlan, setSelectPlan] = useState(2)
   const [planPrice, setPlanPrice] = useState(35000)
@@ -104,7 +105,9 @@ export default function SubscriptionIndex() {
       return toast.error('Tolong Pilih Minimal Satu Makanan baik untuk sarapan, makan siang, ataupun makan malam')
     }
 
+
     dispatch(setLoader(true))
+
     const payload = {
       "id_user": authSlice.user_id,
       "id_diet_type": selectPlan,
@@ -150,9 +153,10 @@ export default function SubscriptionIndex() {
       dispatch(setLoader(true))
 
       const res = await getSubscriptionByUserId(authSlice.user_id)
-      const objectLength = Object.keys(res.data.result).length;
+      const objectLength = Object.keys(res.data.result).length
+      console.log(res)
       if (objectLength > 0) {
-        setIsSubsAlready({ status: true, name: res.data.result.subscription.name })
+        setIsSubsAlready({ status: res.data.result.subscription.status, id: res.data.result.subscription.id, name: res.data.result.subscription.name })
       }
       dispatch(setLoader(false))
     }
@@ -209,25 +213,37 @@ export default function SubscriptionIndex() {
             Pilih rencana diet mu dengan paket langganan yang kami sediakan dan nikmati makanan bergizi langsung ke rumah tanpa repot.
           </div>
         </header>
-
-        {isSubsAlready.status ?
+        {isSubsAlready.id ?
           <>
             <div className="w-full py-16 flex justify-center items-center">
               <div className="min-w-[329px] max-w-[640px] w-full">
                 <div class="w-full bg-white border border-gray-200 rounded-xl shadow-sm py-12 px-8">
                   <div class="flex flex-col pb-10">
                     <div className="flex flex-col items-center">
-                      <div className="p-3 rounded-full flex justify-center items-center bg-primary-100 aspect-square mb-8">
-                        <div class="relative w-24 h-24 overflow-hidden bg-primary-200 rounded-full flex justify-center items-center">
-                          <IconCheck size={32} className="text-primary-900" stroke={3} />
+                      <div className={`p-3 rounded-full flex justify-center items-center aspect-square mb-8 ${isSubsAlready?.status == 'active' ? 'bg-primary-100' : isSubsAlready?.status == 'pending' ? 'bg-yellow-50' : isSubsAlready?.status == 'canceled' ? 'bg-red-100' : ''}`}>
+                        <div class={`relative w-24 h-24 overflow-hidden rounded-full flex justify-center items-center ${isSubsAlready?.status == 'active' ? 'bg-primary-200' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100' : isSubsAlready?.status == 'canceled' ? 'bg-red-200' : ''}`}>
+                          {isSubsAlready?.status == 'active' ? <>
+                            <IconCheck size={32} className="text-primary-900" stroke={3} />
+                          </> :
+                            isSubsAlready?.status == 'pending' ? <>
+                              <IconPennant2Filled size={32} className="text-yellow-600" stroke={3} />
+                            </> :
+                              isSubsAlready?.status == 'canceled' ? <>
+                                <IconCancel size={32} className="text-red-900" stroke={3} />
+                              </> : ''}
                         </div>
                       </div>
-                      <h5 class="mb-1 text-xl font-medium text-primary-900 capitalize">{isSubsAlready.name}</h5>
+                      <h5 class={`mb-1 text-xl font-medium capitalize flex gap-2 items-center ${isSubsAlready?.status == 'active' ? 'text-primary-900' : isSubsAlready?.status == 'pending' ? 'text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'text-red-700' : ''} `}>
+                        {isSubsAlready.name}
+                        <small class={`px-4 py-1 rounded-full ${isSubsAlready?.status == 'active' ? 'bg-primary-100 text-primary-900' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100 text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'bg-red-100 text-red-700' : ''} `}>
+                          {isSubsAlready?.status}
+                        </small>
+                      </h5>
                       <span class="text-sm text-gray-500 ">Terima Kasih karena Telah Berlangganan Dengan Kami.</span>
                     </div>
                     <div className="mt-8">
                       <Link to={'/dashboard'} className="max-w-lg block mx-auto">
-                        <Button isExtend={true} buttonType="secondary">Lihat Detail Langganan</Button>
+                        <Button isExtend={true} buttonType={isSubsAlready?.status == 'active' ? "secondary" : isSubsAlready?.status == 'pending' ? 'warning' : isSubsAlready?.status == 'canceled' ? 'danger' : ''}>Lihat Detail Langganan</Button>
                       </Link>
                     </div>
                   </div>

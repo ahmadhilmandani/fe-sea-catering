@@ -31,6 +31,26 @@ export default function Button({ onClickProp = () => { }, buttonType = BUTTON_TY
       </>
     )
   }
+  else if (buttonType == BUTTON_TYPE.DANGER) {
+    return (
+      <>
+        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 bg-red-50 text-red-800 hover:bg-red-100 font-medium rounded-full text-sm px-10 py-2.5 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+          {isLoading && <IconLoader2 className="animate-spin text-sm" />}
+          {children}
+        </button>
+      </>
+    )
+  }
+  else if (buttonType == BUTTON_TYPE.WARNING) {
+    return (
+      <>
+        <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 bg-yellow-50 text-yellow-700 hover:bg-yellow-100 font-medium rounded-full text-sm px-10 py-2.5 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+          {isLoading && <IconLoader2 className="animate-spin text-sm" />}
+          {children}
+        </button>
+      </>
+    )
+  }
   else {
     return (
       <>
@@ -41,24 +61,4 @@ export default function Button({ onClickProp = () => { }, buttonType = BUTTON_TY
       </>
     )
   }
-  // else if (buttonType == BUTTON_TYPE.DANGER) {
-  //   return (
-  //     <>
-  //       <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-danger-500 dark:text-danger-50 bg-danger-50 hover:bg-danger-100 font-medium rounded-lg text-sm px-6 py-2 dark:bg-danger-700 dark:hover:bg-danger-600 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-  //         {isLoading && <IconLoader2 className="animate-spin text-sm" />}
-  //         {children}
-  //       </button>
-  //     </>
-  //   )
-  // }
-  // else if (buttonType == BUTTON_TYPE.WARNING) {
-  //   return (
-  //     <>
-  //       <button onClick={onClickProp} type="button" className={`flex justify-center items-center gap-3 text-warning-800 dark:text-warning-50 bg-warning-100 hover:bg-warning-300 font-medium rounded-lg text-sm px-6 py-2 dark:bg-warning-700 dark:hover:bg-warning-600 ring-0 focus:outline-none transition-all ${isExtend && 'w-full'} ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-  //         {isLoading && <IconLoader2 className="animate-spin text-sm" />}
-  //         {children}
-  //       </button>
-  //     </>
-  //   )
-  // }
 }
