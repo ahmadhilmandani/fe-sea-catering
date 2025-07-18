@@ -30,3 +30,8 @@ npm install
 
 # 4. Jalankan development server
 npm run dev
+```
+
+## Catatan Penting
+
+- Pastikan Backend Sudah berjalan ketika menjalankan Frontend. Repositori Backend bisa dilihat di [Back-End Repository](https://github.com/ahmadhilmandani/be-sea-catering)
