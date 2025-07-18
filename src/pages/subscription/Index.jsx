@@ -4,7 +4,7 @@ import Input from "../../components/Input";
 import OrderMealCard from "../../components/orderMeal/orderMealCard";
 import MealPlanCard from "../../components/subscription/mealPlanCard";
 import MealDeliverySection from "./MealDeliverySection";
-import ModalLocked from "../../components/subscription/modalLocked";
+import ModalLocked from "../../components/subscription/ModalLocked";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { postSubsciption } from "../../api/postSubscription";
