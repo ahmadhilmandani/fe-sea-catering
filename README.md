@@ -1,12 +1,37 @@
-# React + Vite
+# SEA-Catering (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ini adalah repository frontend dari website **SEA-Catering**, sebuah platform katering sehat yang memudahkan pengguna untuk memilih, memesan, dan berlangganan paket diet sesuai kebutuhan. Aplikasi ini dibangun menggunakan **React** dan didukung oleh berbagai library modern untuk tampilan dan pengelolaan state.
 
-Currently, two official plugins are available:
+## 🛠️ Teknologi yang Digunakan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚛️ **React** — Library utama untuk membangun UI
+- 🎨 **Tailwind CSS** — Untuk styling responsif dan modern
+- 📦 **Redux Toolkit** — Untuk state management global
+- 🔗 **React Router DOM** — Untuk navigasi halaman
+- 🌐 **Axios** — Untuk komunikasi dengan REST API backend
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Cara Menjalankan di Lokal
+
+Ikuti langkah-langkah berikut untuk menjalankan frontend SEA-Catering di mesin lokal kamu:
+
+```bash
+# 1. Clone repository ini
+git clone https://github.com/ahmadhilmandani/fe-sea-catering.git
+
+# 2. Masuk ke direktori project
+cd fe-sea-catering
+
+# 3. Install semua dependency
+npm install
+
+# 4. Ubah .env.example menjadi .env
+
+# 4. Jalankan development server
+npm run dev
+```
+
+## Catatan Penting
+
+- Pastikan Backend Sudah berjalan ketika menjalankan Frontend. Repositori Backend bisa dilihat di [Back-End Repository](https://github.com/ahmadhilmandani/be-sea-catering)
