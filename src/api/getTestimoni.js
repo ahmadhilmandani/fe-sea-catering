@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const getTestimoni = async (getLimit) => {
   try {
-    let apiUrl = `${import.meta.env.VITE_DEV_API_BASE_URL}/testimoni`
+    let apiUrl = `${import.meta.env.}/testimoni`
     
     if (getLimit) {
       apiUrl = apiUrl + `?getLimit=${getLimit}`
