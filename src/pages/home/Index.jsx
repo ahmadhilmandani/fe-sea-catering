@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Navbar from "../../components/Navbar";
 import { IconArrowDown, IconBrandGoogle, IconBrandWhatsapp, IconChevronDown, IconChevronUp, IconSalad, IconStarFilled, IconX } from "@tabler/icons-react";
 import HeroImg from "../../assets/img/hero-img-reduce.jpg"
@@ -15,6 +15,7 @@ import ScreenLoading from "../../components/ScreenLoading";
 export default function HomeIndex() {
   const [loadingScreen, setLoadingScreen] = useState(true)
   const [testimonies, setTestimonies] = useState()
+  const navigate = useNavigate();
 
   const dispatch = useDispatch()
   const isModalOpen = useSelector((state) => state.modalSlice.isOpen)
@@ -33,9 +34,9 @@ export default function HomeIndex() {
 
 
   return (
-    
+
     <div className="relative">
-      { loadingScreen && <ScreenLoading /> }
+      {loadingScreen && <ScreenLoading />}
       <main className="px-12">
         <section className="pb-24">
           <div className="flex gap-4 xl:gap-20 justify-between mb-20 flex-wrap">
@@ -224,7 +225,7 @@ export default function HomeIndex() {
             </div>
           }
         </section>
-        <section className="py-24 min-h-screen">
+        <section  id="contact" className="py-32 min-h-screen">
           <div className="flex gap-12 xl:gap-20 justify-center items-center flex-wrap">
             <div className="min-w-[320px] flex-1 max-w-[40%]">
               <h2 className="text-balance">Yuk, Izinkan Kami Ngebantu Kamu Buat Hidup Sehat!</h2>
@@ -232,12 +233,14 @@ export default function HomeIndex() {
                 Dengan menu yang bisa dikustom, pengiriman luas, dan info nutrisi lengkap, SEA Catering bantu kamu capai gaya hidup sehat yang konsisten dan menyenangkan.
               </p>
               <div className="w-96 mb-5">
-                <Button isExtend={true} buttonType="primary">
+                <Button isExtend={true} buttonType="primary" onClickProp={() => {
+                  navigate('/register')
+                }}>
                   Daftar Di Sini!
                 </Button>
               </div>
               <div>sudah punya akun?
-                <Link className="text-primary-700 border-b border-primary-700 ml-3">
+                <Link to="/login" className="text-primary-700 border-b border-primary-700 ml-3">
                   Login Aja Sini!
                 </Link>
               </div>

@@ -5,6 +5,7 @@ import { useState } from "react"
 import { IconChevronDown, IconChevronUp, IconDashboard, IconLogout2, IconMenu, IconUserFilled } from "@tabler/icons-react"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleSidebar } from "../redux/slices/openSidebarSlice"
+import { HashLink } from "react-router-hash-link"
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -28,22 +29,22 @@ export default function Navbar() {
             <div className="font-bold">CATERING</div>
           </div>
         </div>
-        <Link to={'/'} className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all hidden xl:block`}>
+        <HashLink smooth to="/#" className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all hidden xl:block`}>
           Home
-        </Link>
-        <a href="#service" className="hidden xl:block">
+        </HashLink>
+        <HashLink smooth to="/#service" className="hidden xl:block">
           Lovely Services
-        </a>
-        <a href="#testimoni" className="hidden xl:block">
+        </HashLink>
+        <HashLink smooth to="/#testimoni" className="hidden xl:block">
           Testimoni
-        </a>
-        <a href="#howto" className="hidden xl:block">
+        </HashLink>
+        <HashLink smooth to="/#howto" className="hidden xl:block">
           How to?
-        </a>
+        </HashLink>
       </div>
 
       <div className="xl:hidden block">
-        <IconMenu onClick={()=>{dispatch(toggleSidebar())}} />
+        <IconMenu onClick={() => { dispatch(toggleSidebar()) }} />
       </div>
 
       <div className="xl:flex gap-8 items-center hidden">
@@ -53,9 +54,9 @@ export default function Navbar() {
         <Link to={'/subscription'} className={`${useMatch('/subscription') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
           Subscribe
         </Link>
-        <Link className={`${useMatch('/contact') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all`}>
+        <HashLink smooth to="/#contact">
           Contact
-        </Link>
+        </HashLink>
         {authSlice ? <>
           <div className="max-w-[200px] w-full relative">
             <Button buttonType="primary" isExtend={true} onClickProp={() => {
