@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setIsOpen } from "../redux/slices/modalSlice";
 import Button from "./Button";
 
 export default function Modal({ modalTitle, children, confrimButtonTxt, confrimButtonClick }) {
   const dispatch = useDispatch()
+  const isLoading = useSelector((state)=>state.loaderSlice.isLoading)
 
   return (
     <div onClick={() => {
@@ -37,7 +38,7 @@ export default function Modal({ modalTitle, children, confrimButtonTxt, confrimB
               </Button>
             </div>
             <div className="min-w-[200px] flex-1">
-              <Button onClickProp={confrimButtonClick} isExtend={true} buttonType="primary">
+              <Button onClickProp={confrimButtonClick} isExtend={true} buttonType="primary" isLoading={isLoading}>
                 {confrimButtonTxt}
               </Button>
             </div>

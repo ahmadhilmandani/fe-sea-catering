@@ -56,9 +56,9 @@ export default function DashboardIndex() {
       {isLoading && <ScreenLoading />}
       <main className="w-full min-h-screen px-12">
         <div className="rounded-full bg-primary-100 py-2 px-4 flex items-center gap-3 w-fit">
-          <span class="relative flex size-3">
-            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-600 opacity-75"></span>
-            <span class="relative inline-flex size-3 rounded-full bg-primary-700"></span>
+          <span className="relative flex size-3">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-600 opacity-75"></span>
+            <span className="relative inline-flex size-3 rounded-full bg-primary-700"></span>
           </span>
           <div className="font-semibold text-primary-800">
             DASHBOARD

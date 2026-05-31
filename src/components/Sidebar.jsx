@@ -17,9 +17,7 @@ export default function Sidebar() {
 
   return (
     <div className="w-full h-screen bg-black/80 z-[10000000000000] fixed top-0 left-0 right-0 bottom-0">
-
       <aside className="min-w-[240px] max-w-[640px] w-full bg-white flex flex-col h-screen">
-
         <Link to={'/'} className={`${useMatch('/') ? 'text-primary-700 font-semibold border-b border-primary-800' : ''} trasition-all border-b border-gray-200 p-8`} onClick={() => {
           dispatch(toggleSidebar())
         }}>

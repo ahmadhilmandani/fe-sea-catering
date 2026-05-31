@@ -8,31 +8,42 @@ import Input from "../../components/Input";
 import TestimoniFormCard from "./TestimoniFormCard";
 import { useEffect, useState } from "react";
 import { getTestimoni } from "../../api/getTestimoni";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "../../redux/slices/modalSlice";
+import ScreenLoading from "../../components/ScreenLoading";
 
 export default function HomeIndex() {
-  const [isTestiFormOpen, setIsTestiFormOpen] = useState(false)
+  const [loadingScreen, setLoadingScreen] = useState(true)
   const [testimonies, setTestimonies] = useState()
+
+  const dispatch = useDispatch()
+  const isModalOpen = useSelector((state) => state.modalSlice.isOpen)
 
   const handleGetTestimonies = async () => {
     const resp = await getTestimoni(5)
     setTestimonies(resp.data.result)
+    setLoadingScreen(false)
   }
-  
+
   useEffect(() => {
-    handleGetTestimonies()
-  }, [])
+    if (loadingScreen) {
+      handleGetTestimonies()
+    }
+  }, [loadingScreen])
 
 
   return (
+    
     <div className="relative">
+      { loadingScreen && <ScreenLoading /> }
       <main className="px-12">
         <section className="pb-24">
           <div className="flex gap-4 xl:gap-20 justify-between mb-20 flex-wrap">
             <div className="min-w-[320px] flex-1">
               <div className="rounded-full bg-primary-100 p-2 flex items-center gap-3 w-fit">
-                <span class="relative flex size-3">
-                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-600 opacity-75"></span>
-                  <span class="relative inline-flex size-3 rounded-full bg-primary-700"></span>
+                <span className="relative flex size-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-600 opacity-75"></span>
+                  <span className="relative inline-flex size-3 rounded-full bg-primary-700"></span>
                 </span>
                 <div className="font-semibold text-primary-800">
                   SEA CATERING
@@ -183,29 +194,30 @@ export default function HomeIndex() {
           <h2 className="font-semibold mb-8 text-center">
             Testimonial
           </h2>
-          <div className="max-w-6xl w-full overflow-x-auto flex pl-10 gap-12 mb-12 mx-auto pb-8">
-            {testimonies?.map((element) => {
+          <div className="max-w-7xl w-full overflow-x-auto flex pl-10 gap-12 mb-12 mx-auto pb-8 scrollbar-thin scrollbar-color-sky-500/50 
+            [&::-webkit-scrollbar]:w-2
+            [&::-webkit-scrollbar]:h-0
+            hover:[&::-webkit-scrollbar]:h-1.5
+          [&::-webkit-scrollbar-track]:bg-base-white
+          [&::-webkit-scrollbar-thumb]:bg-slate-100
+            [&::-webkit-scrollbar-thumb]:rounded-full
+          hover:[&::-webkit-scrollbar-thumb]:bg-primary-600
+          transition-all
+          ">
+            {testimonies?.map((element, index) => {
               return (
-                <TestimoniCard address={element.address} name={element.name} star={element.star} testimoni={element.testimoni} />
+                <TestimoniCard key={index} address={element.address} name={element.name} star={element.star} testimoni={element.testimoni} />
               )
             })}
           </div>
           <p className="mb-2 text-center">Kalau kamu pernah menggunakan layanan kami, maka apresiasi yang besar bila kamu juga memberikan testimoni ! </p>
-          {isTestiFormOpen ?
+          {isModalOpen ?
             <>
-              <div className="mx-auto max-w-3xl w-full mb-5">
-                <TestimoniFormCard />
-              </div>
-              <div className="w-72 mx-auto">
-                <Button buttonType="secondary" isExtend={true} onClickProp={() => { setIsTestiFormOpen(false) }}>
-                  Tutup Form
-                  <IconChevronUp className="text-primary-900" />
-                </Button>
-              </div>
+              <TestimoniFormCard handleRefetch={setLoadingScreen} />
             </>
             :
             <div className="w-72 mx-auto">
-              <Button buttonType="primary" isExtend={true} onClickProp={() => { setIsTestiFormOpen(true) }}>
+              <Button buttonType="primary" isExtend={true} onClickProp={() => { dispatch(setIsOpen(true)) }}>
                 Beri Testimonimu
                 <IconChevronDown color="white" />
               </Button>

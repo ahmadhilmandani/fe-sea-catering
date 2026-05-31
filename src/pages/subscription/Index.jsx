@@ -224,11 +224,11 @@ export default function SubscriptionIndex() {
           <>
             <div className="w-full py-16 flex justify-center items-center flex-wrap">
               <div className="min-w-[329px] max-w-[640px] w-full">
-                <div class="w-full bg-white border border-gray-200 rounded-xl shadow-sm py-12 px-8">
-                  <div class="flex flex-col pb-10">
+                <div className="w-full bg-white border border-gray-200 rounded-xl shadow-sm py-12 px-8">
+                  <div className="flex flex-col pb-10">
                     <div className="flex flex-col items-center">
                       <div className={`p-3 rounded-full flex justify-center items-center aspect-square mb-8 ${isSubsAlready?.status == 'active' ? 'bg-primary-100' : isSubsAlready?.status == 'pending' ? 'bg-yellow-50' : isSubsAlready?.status == 'canceled' ? 'bg-red-100' : ''}`}>
-                        <div class={`relative w-24 h-24 overflow-hidden rounded-full flex justify-center items-center ${isSubsAlready?.status == 'active' ? 'bg-primary-200' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100' : isSubsAlready?.status == 'canceled' ? 'bg-red-200' : ''}`}>
+                        <div className={`relative w-24 h-24 overflow-hidden rounded-full flex justify-center items-center ${isSubsAlready?.status == 'active' ? 'bg-primary-200' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100' : isSubsAlready?.status == 'canceled' ? 'bg-red-200' : ''}`}>
                           {isSubsAlready?.status == 'active' ? <>
                             <IconCheck size={32} className="text-primary-900" stroke={3} />
                           </> :
@@ -240,13 +240,13 @@ export default function SubscriptionIndex() {
                               </> : ''}
                         </div>
                       </div>
-                      <h5 class={`mb-1 text-xl font-medium capitalize flex gap-2 items-center ${isSubsAlready?.status == 'active' ? 'text-primary-900' : isSubsAlready?.status == 'pending' ? 'text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'text-red-700' : ''} `}>
+                      <h5 className={`mb-1 text-xl font-medium capitalize flex gap-2 items-center ${isSubsAlready?.status == 'active' ? 'text-primary-900' : isSubsAlready?.status == 'pending' ? 'text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'text-red-700' : ''} `}>
                         {isSubsAlready.name}
-                        <small class={`px-4 py-1 rounded-full ${isSubsAlready?.status == 'active' ? 'bg-primary-100 text-primary-900' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100 text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'bg-red-100 text-red-700' : ''} `}>
+                        <small className={`px-4 py-1 rounded-full ${isSubsAlready?.status == 'active' ? 'bg-primary-100 text-primary-900' : isSubsAlready?.status == 'pending' ? 'bg-yellow-100 text-yellow-700' : isSubsAlready?.status == 'canceled' ? 'bg-red-100 text-red-700' : ''} `}>
                           {isSubsAlready?.status}
                         </small>
                       </h5>
-                      <span class="text-sm text-gray-500 ">Terima Kasih karena Telah Berlangganan Dengan Kami.</span>
+                      <span className="text-sm text-gray-500 ">Terima Kasih karena Telah Berlangganan Dengan Kami.</span>
                     </div>
                     <div className="mt-8">
                       <Link to={'/dashboard'} className="max-w-lg block mx-auto">
