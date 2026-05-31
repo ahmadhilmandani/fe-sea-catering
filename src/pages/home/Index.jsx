@@ -220,7 +220,6 @@ export default function HomeIndex() {
             <div className="w-72 mx-auto">
               <Button buttonType="primary" isExtend={true} onClickProp={() => { dispatch(setIsOpen(true)) }}>
                 Beri Testimonimu
-                <IconChevronDown color="white" />
               </Button>
             </div>
           }
