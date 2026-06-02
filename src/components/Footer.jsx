@@ -1,5 +1,6 @@
 import { IconBrandGoogle, IconBrandWhatsapp, IconX } from "@tabler/icons-react"
 import IconWhite from "../assets/logo/logo-sea-catering-white.png"
+import { HashLink } from "react-router-hash-link"
 
 export default function Footer() {
   return (
@@ -18,19 +19,20 @@ export default function Footer() {
             </div>
             <div className="grid grid-cols-2 gap-8 sm:gap-6">
               <div>
+
                 <h2 className="mb-6 text-sm font-semibold uppercase text-white">MENU</h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="https://flowbite.com/" className="hover:underline text-white">Home</a>
+                    <HashLink smooth to="/#" className="hover:underline text-white">Home</HashLink>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Lovely Services</a>
+                    <HashLink smooth to="/#service" className="hover:underline text-white">Lovely Services</HashLink>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" className="hover:underline text-white">How to?</a>
+                    <HashLink smooth to="/#howto" className="hover:underline text-white">How to?</HashLink>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Our Contact</a>
+                    <HashLink smooth to="/#contact" className="hover:underline text-white">Our Contact</HashLink>
                   </li>
                 </ul>
               </div>
@@ -38,13 +40,13 @@ export default function Footer() {
                 <h2 className="mb-6 text-sm font-semibold uppercase text-white">SERVICES</h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="https://flowbite.com/" className="hover:underline text-white">Meal Customization</a>
+                    <div href="https://flowbite.com/" className="hover:underline text-white">Meal Customization</div>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Delivery to Major Cities</a>
+                    <div href="https://tailwindcss.com/" className="hover:underline text-white">Delivery to Major Cities</div>
                   </li>
                   <li className="mb-4">
-                    <a href="https://tailwindcss.com/" className="hover:underline text-white">Detailed Nutritional Information</a>
+                    <div href="https://tailwindcss.com/" className="hover:underline text-white">Detailed Nutritional Information</div>
                   </li>
                 </ul>
               </div>
@@ -55,9 +57,29 @@ export default function Footer() {
             <span className="text-sm text-white">© 2025 <a href="https://flowbite.com/" className="hover:underline">SEA CATERING</a>. All Rights Reserved.
             </span>
             <div className="flex mt-4 sm:justify-center sm:mt-0 gap-3">
-              <IconBrandGoogle size={16} className="text-white" />
-              <IconX size={16} className="text-white" />
-              <IconBrandWhatsapp size={16} className="text-white" />
+              <a
+                href="https://www.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconBrandGoogle size={16} className="text-white" />
+              </a>
+
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconX size={16} className="text-white" />
+              </a>
+
+              <a
+                href="https://wa.me/628123456789"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconBrandWhatsapp size={16} className="text-white" />
+              </a>
             </div>
           </div>
         </div>
