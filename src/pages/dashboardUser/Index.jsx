@@ -7,6 +7,7 @@ import UserInfoSection from "./UserInfoSection"
 import { Link } from "react-router"
 import SidebarNav from "./SidebarNav"
 import Subscription from "./Subscription"
+import DashboardUserOrderMeal from "./OrderMeal"
 
 
 
@@ -21,7 +22,7 @@ export default function DashboardIndex() {
   const DASHBOARD_SECTION = {
     'profile': <UserInfoSection />,
     'subscription': <Subscription />,
-    'meal_order': <Subscription />
+    'meal_order': <DashboardUserOrderMeal />
   }
 
 
