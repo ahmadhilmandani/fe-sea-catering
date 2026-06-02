@@ -23,7 +23,7 @@ export default function LoginIndex() {
     }
     
     if (!email || !password) {
-      return toast.error("Tolong Isi Semua Kolom");
+      return toast.error("Tolong Isi Password dan Email Dengan Benar");
     }
     
     dispatch(setLoader(true))

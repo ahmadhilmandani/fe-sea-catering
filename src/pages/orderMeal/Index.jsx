@@ -39,6 +39,8 @@ export default function OrderMealIndex() {
   const handlePostFoodMenu = async () => {
     dispatch(setLoader(true))
 
+
+
     const payload = {
       "name": name,
       "address": address,
@@ -49,13 +51,23 @@ export default function OrderMealIndex() {
       "deliver_date_schedule": timeDeliver,
       "is_send": 0
     }
-    
+
     let resp
 
     if (!authSlice) {
+      if (!name || !address || !timeDeliver) {
+        dispatch(setLoader(false))
+        return toast.error('Lengkapi Nama, Alamat, dan Tgl. Pesanan Diantarkan Dengan Benar!')
+      }
       resp = await postOrderMealUnreg(payload)
+
     } else {
+      if (!timeDeliver) {
+        dispatch(setLoader(false))
+        return toast.error('Lengkapi Tgl. Pesanan Diantarkan Dengan Benar!')
+      }
       resp = await postOrderMealReg(payload)
+
     }
 
     if (resp?.data?.is_error) {
@@ -69,9 +81,9 @@ export default function OrderMealIndex() {
 
   const handleGetFoodMenu = async () => {
     dispatch(setLoader(true))
-    
+
     let resp
-    if (activeFilter == 0) {     
+    if (activeFilter == 0) {
       resp = await getFoodMenu()
     } else {
       resp = await getFoodMenu(activeFilter)
