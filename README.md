@@ -2,6 +2,106 @@
 
 The frontend web application for **SEA Catering**, an intuitive catering management and ordering platform. This client application provides a responsive UI for browsing catering menus, managing orders, and handling user profiles.
 
+---
+## 🌐 Deployed Link
+Link : [Click Me](https://fe-sea-catering.netlify.app/)
+
+Here's the credentials for admin :
+* **Email :** `admin@sea.com`
+* **Password :** `Admin123!`
+
+---
+
+## 🌟 Key Features
+
+### 🏠 Homepage
+
+* Company branding with the slogan:
+  **"Healthy Meals, Anytime, Anywhere"**
+* Business introduction and service overview
+* Featured platform highlights
+* Contact information section
+
+### 🍱 Meal Plans
+
+Users can browse available meal plans:
+
+* Diet Plan
+* Protein Plan
+* Royal Plan
+
+Each plan includes:
+
+* Plan name
+* Pricing information
+* Description
+* Optional image
+* Detailed information modal
+
+### ⭐ Testimonials
+
+Customer review system featuring:
+
+* Customer name
+* Rating system
+* Review message
+* Review carousel/slider
+* Testimonial submission form
+
+### 📦 Subscription Management
+
+Customers can subscribe to meal plans by selecting:
+
+* Full Name
+* Phone Number
+* Meal Plan
+* Meal Types:
+  * Breakfast
+  * Lunch
+  * Dinner
+* Delivery Days
+* Allergies / Special Requests
+
+Automatic subscription price calculation:
+
+Subscription Price = Plan Price × Number of Meal Types × Delivery Days × 4.3
+
+### 👤 Authentication & Authorization
+
+* User Registration
+* User Login
+* Secure Logout
+* Password Hashing
+* Protected Routes
+* Role-Based Access Control
+
+Roles:
+* User
+* Admin
+
+### 📊 User Dashboard
+
+Authenticated users can:
+
+* View active subscriptions
+* Pause subscriptions
+* Cancel subscriptions
+* Monitor subscription status
+
+### 📈 Admin Dashboard
+
+Administrative analytics include:
+
+* Date Range Filtering
+* New Subscription Metrics
+* Monthly Recurring Revenue (MRR)
+* Reactivation Tracking
+* Subscription Growth Analysis
+
+
+---
+
+
 ## 🚀 Tech Stack
 
 * **Core Framework:** [React](https://react.dev/) (v18+)
